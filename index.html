@@ -7,7 +7,7 @@
 <meta name="description" content="Tell No9ta Creative Studio about your business and your project.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat:wght@400;500;600;700&family=Cairo:wght@700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat:wght@400;500;600;700&family=Cairo:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 :root{
   --bg:#0b0b0b; --panel:#141414; --line:rgba(255,255,255,.14); --line-strong:rgba(255,255,255,.28);
@@ -17,6 +17,7 @@
 html{background:var(--bg)}
 body{
   margin:0; min-height:100vh; color:var(--text); font-family:'Montserrat',system-ui,sans-serif; font-size:16px; line-height:1.5;
+  overflow-x:hidden;
 }
 body::before{
   content:""; position:fixed; inset:0; z-index:-1; pointer-events:none;
@@ -34,77 +35,133 @@ header{display:flex; align-items:center; justify-content:space-between; gap:16px
 .kicker{font-weight:700; font-size:13px; letter-spacing:6px; text-transform:uppercase; color:var(--red-hi)}
 h1{
   margin:10px 0 18px; font-family:'Bebas Neue',sans-serif; font-weight:400; font-size:clamp(64px,15vw,116px);
-  line-height:.88; letter-spacing:1px; text-transform:uppercase; padding-left:20px; border-left:6px solid var(--red);
+  line-height:.88; letter-spacing:1px; text-transform:uppercase; padding-inline-start:20px; border-inline-start:6px solid var(--red);
 }
-.lead{color:#dcdcdc; max-width:56ch; margin:0 0 36px}
+.lead{color:#dcdcdc; max-width:56ch; margin:0 0 28px}
+.meta{color:var(--muted); font-size:13px; font-weight:600; letter-spacing:1.5px; text-transform:uppercase; margin:0 0 26px}
+.resume{margin:0 0 22px; padding:14px 16px; border-radius:12px; border:1px solid var(--line-strong); background:var(--panel); font-size:15px}
+.start-row{display:flex; align-items:center; gap:18px; flex-wrap:wrap}
 
-.steps{display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:10px; margin:0 0 34px; padding:0; list-style:none}
-.steps li{font-size:12px; font-weight:600; letter-spacing:1.5px; text-transform:uppercase; color:#8f8f8f; padding-top:12px; border-top:3px solid var(--line)}
-.steps li.on{color:var(--text); border-top-color:var(--red)}
-.steps li.done{color:var(--muted); border-top-color:#7a1218}
+.progress{margin:0 0 34px}
+.progress-top{display:flex; justify-content:space-between; gap:12px; font-size:12px; font-weight:600; letter-spacing:1.5px; text-transform:uppercase; color:var(--muted); margin-bottom:10px}
+.progress-top b{color:var(--text); font-weight:700}
+.bar{height:4px; background:var(--line); border-radius:99px; overflow:hidden}
+.bar i{display:block; height:100%; width:0; background:var(--red-hi); border-radius:99px; transition:width .35s ease}
 
 fieldset{border:0; margin:0; padding:0; min-width:0}
-.q{padding:26px 0; border-top:1px solid var(--line)}
-.q:first-of-type{border-top:0; padding-top:0}
+.stage{min-height:300px}
+.q{outline:none}
 legend{float:left; width:100%}
 legend ~ *{clear:both}
-legend,.label{display:block; padding:0; font-weight:700; font-size:19px; line-height:1.3; margin-bottom:6px}
+legend,.label{display:block; padding:0; font-weight:700; font-size:clamp(22px,5vw,28px); line-height:1.25; margin-bottom:8px}
 .req{color:var(--red-hi)}
 .hint{display:block; color:var(--muted); font-size:14px; margin-bottom:14px}
-legend{margin-bottom:14px}
-.label + input,.label + textarea{margin-top:12px}
-legend + .hint{margin-top:-8px}
+legend{margin-bottom:20px}
+.label + input,.label + textarea{margin-top:16px}
+legend + .hint{margin-top:-12px; margin-bottom:18px}
 
 .opts{display:flex; flex-wrap:wrap; gap:10px}
 .opt{position:relative}
 .opt input{position:absolute; opacity:0; inset:0; width:100%; height:100%; margin:0; cursor:pointer}
 .opt span{
-  display:flex; align-items:center; gap:10px; min-height:48px; padding:10px 20px; border-radius:999px;
+  display:flex; align-items:center; gap:10px; min-height:50px; padding:10px 20px; border-radius:999px;
   background:var(--panel); border:1px solid var(--line-strong); font-weight:500; font-size:15px;
-  transition:border-color .15s, background .15s;
+  transition:border-color .15s, background .15s, transform .12s;
 }
 .opt span::before{content:""; width:16px; height:16px; flex:0 0 auto; border-radius:50%; border:2px solid #8a8a8a; transition:.15s}
 .opt.box span::before{border-radius:4px}
+.opt kbd{
+  margin-inline-start:4px; min-width:22px; height:22px; padding:0 5px; display:inline-flex; align-items:center; justify-content:center;
+  border-radius:6px; border:1px solid var(--line-strong); color:var(--muted); font:600 11px 'Montserrat',system-ui,sans-serif;
+}
 .opt input:hover + span{border-color:var(--red-hi)}
+.opt input:active + span{transform:scale(.97)}
 .opt input:focus-visible + span{outline:2px solid #fff; outline-offset:2px}
 .opt input:checked + span{background:var(--red-tint); border-color:var(--red-hi)}
 .opt input:checked + span::before{background:var(--red-hi); border-color:var(--red-hi); box-shadow:inset 0 0 0 3px var(--red-tint)}
+.opt input:checked + span kbd{color:#fff; border-color:var(--red-hi)}
 
 input[type=text],input[type=tel],input[type=email],textarea{
-  width:100%; min-height:50px; padding:12px 16px; border-radius:12px; background:var(--panel); color:var(--text);
-  border:1px solid var(--line-strong); font:inherit;
+  width:100%; min-height:54px; padding:12px 16px; border-radius:12px; background:var(--panel); color:var(--text);
+  border:1px solid var(--line-strong); font:inherit; font-size:17px;
 }
-textarea{min-height:130px; resize:vertical}
+textarea{min-height:150px; resize:vertical}
 input::placeholder,textarea::placeholder{color:#7d7d7d}
 input:focus,textarea:focus{outline:none; border-color:var(--red-hi); box-shadow:0 0 0 2px rgba(230,57,70,.35)}
 .other{margin-top:12px}
-.err{display:none; color:var(--err); font-size:14px; font-weight:600; margin-top:10px}
+.err{display:none; color:var(--err); font-size:14px; font-weight:600; margin-top:12px}
 .q.bad .err{display:block}
 
 .nav{display:flex; justify-content:space-between; align-items:center; gap:12px; margin-top:34px; padding-top:26px; border-top:1px solid var(--line)}
 button{font:inherit; cursor:pointer}
 .btn{
+  display:inline-flex; align-items:center; justify-content:center; text-decoration:none;
   min-height:52px; padding:0 30px; border:0; border-radius:999px; background:var(--red); color:#fff;
   font-weight:700; letter-spacing:1.5px; text-transform:uppercase; font-size:14px; box-shadow:0 12px 32px rgba(200,29,37,.35);
+  transition:background .15s, transform .12s;
 }
 .btn:hover{background:var(--red-hi)}
+.btn:active{transform:scale(.97)}
 .btn[disabled]{opacity:.6; cursor:wait}
+.btn.ghost{background:none; border:1px solid var(--line-strong); box-shadow:none}
+.btn.ghost:hover{border-color:#fff; background:none}
 .back{min-height:52px; padding:0 8px; background:none; border:0; color:var(--muted); font-weight:600; letter-spacing:1px; text-transform:uppercase; font-size:13px}
 .back:hover{color:#fff}
-.btn:focus-visible,.back:focus-visible{outline:2px solid #fff; outline-offset:3px}
+.btn:focus-visible,.back:focus-visible,.rv:focus-visible{outline:2px solid #fff; outline-offset:3px}
+.keys{margin:14px 0 0; text-align:end; color:#8f8f8f; font-size:12px}
 .formerr{display:none; margin-top:18px; padding:14px 16px; border-radius:12px; border:1px solid var(--err); color:var(--err); font-size:14px; font-weight:600}
-.hp{position:absolute; left:-9999px}
+.hp{position:absolute; inset-inline-start:-9999px; width:1px; height:1px; opacity:0; pointer-events:none}
 
-.thanks{display:none; padding:20px 0}
-.thanks h2{margin:0 0 14px; font-family:'Bebas Neue',sans-serif; font-weight:400; font-size:clamp(52px,12vw,88px); line-height:.9; text-transform:uppercase}
+.review{outline:none}
+.review h2{margin:0 0 6px; font-weight:700; font-size:clamp(22px,5vw,28px); line-height:1.25}
+.review > p{margin:0 0 18px; color:var(--muted); font-size:14px}
+.rv{
+  display:grid; grid-template-columns:1fr auto; gap:2px 16px; width:100%; text-align:start; padding:14px 0;
+  background:none; border:0; border-top:1px solid var(--line); color:var(--text);
+}
+.rv .rq{grid-column:1; color:var(--muted); font-size:13px}
+.rv .ra{grid-column:1; font-weight:600; font-size:16px; overflow-wrap:anywhere; white-space:pre-wrap}
+.rv .ra.none{color:#8f8f8f; font-weight:500}
+.rv .re{grid-column:2; grid-row:1 / span 2; align-self:center; color:var(--red-hi); font-size:12px; font-weight:700; letter-spacing:1.5px; text-transform:uppercase}
+.rv:hover .re{color:#fff}
+
+.thanks{display:none; padding:20px 0; outline:none}
+.thanks h2{margin:10px 0 14px; font-family:'Bebas Neue',sans-serif; font-weight:400; font-size:clamp(52px,12vw,88px); line-height:.9; text-transform:uppercase; overflow-wrap:anywhere}
 .thanks p{color:#dcdcdc; max-width:50ch; margin:0 0 10px}
+.thanks .start-row{margin:24px 0}
 footer{margin-top:56px; padding-top:22px; border-top:1px solid var(--line); display:flex; justify-content:space-between; gap:12px; flex-wrap:wrap; font-size:12px; letter-spacing:3px; text-transform:uppercase; color:#8f8f8f}
 [hidden]{display:none !important}
-@media (max-width:520px){ .opt{flex:1 1 100%} .steps li{font-size:10px; letter-spacing:1px} }
+
+.lang{display:flex; justify-content:flex-end; gap:6px; margin:-12px 0 18px}
+.lang button{min-height:36px; padding:0 13px; border-radius:999px; background:none; border:1px solid var(--line-strong); color:var(--muted); font-size:12px; font-weight:700; letter-spacing:1px}
+.lang button:hover{color:#fff}
+.lang button[aria-pressed=true]{color:#fff; border-color:var(--red-hi); background:var(--red-tint)}
+.lang button:focus-visible{outline:2px solid #fff; outline-offset:2px}
+html[lang=ar] body{font-family:'Cairo','Montserrat',system-ui,sans-serif}
+html[lang=ar] *{letter-spacing:0 !important}
+html[lang=ar] .brand span{letter-spacing:4px !important}
+html[lang=ar] h1,html[lang=ar] .thanks h2{font-family:'Cairo',sans-serif; font-weight:700; line-height:1.15; font-size:clamp(44px,11vw,84px)}
+html[dir=rtl] input[dir=ltr]{text-align:right}
+
+@keyframes inR{from{opacity:0; transform:translateX(36px)} to{opacity:1; transform:none}}
+@keyframes inL{from{opacity:0; transform:translateX(-36px)} to{opacity:1; transform:none}}
+@keyframes shake{20%,60%{transform:translateX(-6px)} 40%,80%{transform:translateX(6px)}}
+@keyframes fall{to{transform:translateY(110vh) rotate(720deg); opacity:.2}}
+.in-r{animation:inR .28s ease both}
+.in-l{animation:inL .28s ease both}
+.shake{animation:shake .3s ease}
+.confetti{position:fixed; top:-16px; width:9px; height:14px; z-index:5; pointer-events:none; animation:fall linear forwards}
+
+@media (hover:none){ .opt kbd,.keys{display:none} }
+@media (max-width:520px){ .opt{flex:1 1 100%} .stage{min-height:0} .nav .btn{padding:0 24px} }
+@media (prefers-reduced-motion:reduce){ *{animation:none !important; transition:none !important} }
 </style>
 </head>
 <body>
 <div class="wrap">
+  <div class="lang" id="lang" role="group" aria-label="Language">
+    <button type="button" data-lang="en">EN</button><button type="button" data-lang="fr">FR</button><button type="button" data-lang="ar" lang="ar">عربي</button>
+  </div>
   <header>
     <div class="brand">
       <img src="data:image/jpeg;base64,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" alt="No9ta logo">
@@ -116,20 +173,27 @@ footer{margin-top:56px; padding-top:22px; border-top:1px solid var(--line); disp
   <main>
     <div id="intro">
       <div class="kicker">Start a project</div>
-      <h1>Let's see if<br>we're a fit</h1>
+      <h1 id="h1">Let's see if<br>we're a fit</h1>
       <p class="lead">No9ta Creative Studio works with brands that want content people stop to watch: video production, editing, scriptwriting and marketing strategy. Tell us about your business and we'll get back to you.</p>
+      <p class="meta">16 short questions · about 2 minutes</p>
+      <p class="resume" id="resume" hidden>Welcome back. Your earlier answers are saved on this device.</p>
+      <div class="start-row">
+        <button type="button" class="btn" id="start">Start</button>
+        <button type="button" class="back" id="restart" hidden>Start over</button>
+      </div>
     </div>
 
-    <ol class="steps" id="steps" aria-label="Progress">
-      <li class="on">1. Your fit</li><li>2. About you</li><li>3. Your content</li>
-    </ol>
+    <div class="progress" id="progress" hidden>
+      <div class="progress-top"><b id="ptitle"></b><span id="pcount" aria-live="polite"></span></div>
+      <div class="bar"><i id="bar"></i></div>
+    </div>
 
-    <form id="form" novalidate>
+    <form id="form" novalidate hidden>
       <input class="hp" type="checkbox" name="botcheck" tabindex="-1" autocomplete="off" aria-hidden="true">
 
-      <!-- STEP 1 -->
-      <section class="step" data-step="0">
-        <fieldset class="q" data-required="radio">
+      <div class="stage">
+        <!-- PART 1 -->
+        <fieldset class="q" data-required="radio" data-part="Your fit">
           <legend>Which category best describes your business? <span class="req">*</span></legend>
           <div class="opts">
             <label class="opt"><input type="radio" name="Category" value="Fitness & Sport"><span>Fitness &amp; Sport</span></label>
@@ -200,11 +264,9 @@ footer{margin-top:56px; padding-top:22px; border-top:1px solid var(--line); disp
           </div>
           <div class="err">Please choose one.</div>
         </fieldset>
-      </section>
 
-      <!-- STEP 2 -->
-      <section class="step" data-step="1" hidden>
-        <div class="q" data-required="text">
+        <!-- PART 2 -->
+        <div class="q" data-required="text" data-part="About you">
           <label class="label" for="fName">Your full name <span class="req">*</span></label>
           <input id="fName" type="text" name="Name" autocomplete="name">
           <div class="err">Please enter your name.</div>
@@ -227,22 +289,21 @@ footer{margin-top:56px; padding-top:22px; border-top:1px solid var(--line); disp
         <div class="q" data-required="phone">
           <label class="label" for="fPhone">Phone number <span class="req">*</span></label>
           <span class="hint">WhatsApp if possible</span>
-          <input id="fPhone" type="tel" name="Phone" autocomplete="tel" inputmode="tel" placeholder="+216 ">
+          <input id="fPhone" dir="ltr" type="tel" name="Phone" autocomplete="tel" inputmode="tel" placeholder="+216 ">
           <div class="err">Please enter a valid phone number.</div>
         </div>
         <div class="q" data-required="email-optional">
           <label class="label" for="fEmail">Email</label>
-          <input id="fEmail" type="email" name="Email" autocomplete="email" placeholder="you@example.com">
+          <span class="hint">Optional</span>
+          <input id="fEmail" dir="ltr" type="email" name="Email" autocomplete="email" placeholder="you@example.com">
           <div class="err">This email doesn't look right.</div>
         </div>
-      </section>
 
-      <!-- STEP 3 -->
-      <section class="step" data-step="2" hidden>
-        <div class="q">
+        <!-- PART 3 -->
+        <div class="q" data-part="Your content">
           <label class="label" for="fSocial">Instagram, Facebook or TikTok page</label>
-          <span class="hint">Paste a link or your @handle</span>
-          <input id="fSocial" type="text" name="Social page" placeholder="@yourbrand">
+          <span class="hint">Optional. Paste a link or your @handle</span>
+          <input id="fSocial" dir="ltr" type="text" name="Social page" placeholder="@yourbrand">
         </div>
         <fieldset class="q" data-required="radio">
           <legend>How do you create content today? <span class="req">*</span></legend>
@@ -275,23 +336,34 @@ footer{margin-top:56px; padding-top:22px; border-top:1px solid var(--line); disp
         </fieldset>
         <div class="q">
           <label class="label" for="fProject">Tell us about your project</label>
-          <span class="hint">What you have in mind, an example you like, a date to respect</span>
+          <span class="hint">Optional. What you have in mind, an example you like, a date to respect</span>
           <textarea id="fProject" name="Project"></textarea>
         </div>
-      </section>
+
+        <!-- REVIEW -->
+        <section class="review" id="review" tabindex="-1" hidden>
+          <h2>Check your answers</h2>
+          <p>Tap any answer to change it, then send your request.</p>
+          <div id="rvlist"></div>
+        </section>
+      </div>
 
       <div class="nav">
-        <button type="button" class="back" id="back" hidden>Back</button>
-        <span></span>
+        <button type="button" class="back" id="back">Back</button>
         <button type="submit" class="btn" id="next">Continue</button>
       </div>
+      <p class="keys" id="keys">Press a letter to choose, Enter to continue</p>
       <div class="formerr" id="formerr" role="alert"></div>
     </form>
 
     <section class="thanks" id="thanks" tabindex="-1">
       <div class="kicker">Request sent</div>
-      <h2>Thank you</h2>
-      <p>We got your request. The No9ta team will review it and contact you within 48 hours.</p>
+      <h2 id="thanksTitle">Thank you</h2>
+      <p id="thanksText">We got your request. The No9ta team will review it and contact you within 48 hours.</p>
+      <div class="start-row" id="thanksLinks" hidden>
+        <a class="btn" id="waLink" target="_blank" rel="noopener" hidden>Message us on WhatsApp</a>
+        <a class="btn ghost" id="igLink" target="_blank" rel="noopener" hidden>Follow us on Instagram</a>
+      </div>
       <p class="ar" lang="ar" dir="rtl">شكرا على ثقتكم</p>
     </section>
   </main>
@@ -300,28 +372,310 @@ footer{margin-top:56px; padding-top:22px; border-top:1px solid var(--line); disp
 </div>
 
 <script>
-// ---- SETUP: paste your free key from https://web3forms.com here ----
+// ---- SETUP ---------------------------------------------------------
+// Free key from https://web3forms.com
 const WEB3FORMS_KEY = "97683fe9-b4d1-4468-a71d-d3fcc1cdf571";
+// Optional buttons on the thank-you screen. Leave empty to hide them.
+const WHATSAPP_NUMBER = "";  // digits with country code, e.g. "21612345678"
+const INSTAGRAM_URL = "";    // e.g. "https://instagram.com/yourpage"
 // --------------------------------------------------------------------
 
-const form = document.getElementById('form');
-const steps = [...form.querySelectorAll('.step')];
-const stepLabels = [...document.querySelectorAll('#steps li')];
-const next = document.getElementById('next');
-const back = document.getElementById('back');
-const formerr = document.getElementById('formerr');
-let current = 0;
+const STORE = 'no9ta-form-v1';
+const $ = id => document.getElementById(id);
+const form = $('form'), intro = $('intro'), review = $('review'), progress = $('progress');
+const next = $('next'), back = $('back'), formerr = $('formerr');
+const qs = [...form.querySelectorAll('.q')];
+const N = qs.length;
+const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+let pos = -1;          // -1 welcome, 0..N-1 questions, N review
+let toReview = false;  // editing one answer from the review screen
+let timer = null, sending = false;
 
-function show(i) {
-  current = i;
-  steps.forEach((s, n) => s.hidden = n !== i);
-  stepLabels.forEach((l, n) => { l.className = n === i ? 'on' : n < i ? 'done' : ''; });
-  back.hidden = i === 0;
-  next.textContent = i === steps.length - 1 ? 'Send my request' : 'Continue';
-  document.getElementById('intro').hidden = i !== 0;
-  formerr.style.display = 'none';
-  document.getElementById('steps').scrollIntoView({ block: 'start' });
+// ---- Languages ----
+// Visible text is translated; the answers in your email always stay in English.
+const I18N = {
+  fr: {
+    "Work with No9ta": "Travailler avec No9ta",
+    "Start a project": "Démarrer un projet",
+    "Let's see if|we're a fit": "Faisons|connaissance",
+    "No9ta Creative Studio works with brands that want content people stop to watch: video production, editing, scriptwriting and marketing strategy. Tell us about your business and we'll get back to you.": "No9ta Creative Studio travaille avec les marques qui veulent du contenu qu'on s'arrête pour regarder : production vidéo, montage, écriture de scripts et stratégie marketing. Parlez-nous de votre activité et nous vous recontacterons.",
+    "16 short questions · about 2 minutes": "16 questions courtes · environ 2 minutes",
+    "Welcome back. Your earlier answers are saved on this device.": "Bon retour. Vos réponses précédentes sont enregistrées sur cet appareil.",
+    "Start": "Commencer",
+    "Continue where I left off": "Reprendre où j'en étais",
+    "Start over": "Recommencer",
+    "Back": "Retour",
+    "Continue": "Continuer",
+    "Save answer": "Enregistrer",
+    "Send my request": "Envoyer ma demande",
+    "Sending": "Envoi en cours",
+    "Press a letter to choose, Enter to continue": "Appuyez sur une lettre pour choisir, Entrée pour continuer",
+    "Your fit": "Votre profil",
+    "About you": "À propos de vous",
+    "Your content": "Votre contenu",
+    "Review": "Vérification",
+    "Almost done": "Presque terminé",
+    "Question {n} of {N}": "Question {n} sur {N}",
+    "Check your answers": "Vérifiez vos réponses",
+    "Tap any answer to change it, then send your request.": "Touchez une réponse pour la modifier, puis envoyez votre demande.",
+    "Edit": "Modifier",
+    "Not answered": "Sans réponse",
+    "This form is not connected yet: the Web3Forms access key is missing.": "Ce formulaire n'est pas encore connecté : la clé Web3Forms est manquante.",
+    "We could not send your request. Your answers are saved. Check your connection and try again.": "Nous n'avons pas pu envoyer votre demande. Vos réponses sont enregistrées. Vérifiez votre connexion et réessayez.",
+    "Request sent": "Demande envoyée",
+    "Thank you": "Merci",
+    "Thank you, {name}": "Merci, {name}",
+    "We got your request{for}. The No9ta team will review it and contact you{on} within 48 hours.": "Nous avons bien reçu votre demande{for}. L'équipe No9ta va l'étudier et vous contactera{on} sous 48 heures.",
+    " for {b}": " pour {b}",
+    " on {p}": " au {p}",
+    "Message us on WhatsApp": "Écrivez-nous sur WhatsApp",
+    "Follow us on Instagram": "Suivez-nous sur Instagram",
+    "Hello No9ta, I just sent a request{for}.": "Bonjour No9ta, je viens d'envoyer une demande{for}.",
+    "Tunis": "Tunis",
+
+    "Which category best describes your business?": "Quelle catégorie décrit le mieux votre activité ?",
+    "Fitness & Sport": "Fitness & Sport",
+    "Food & Restaurants": "Restauration",
+    "Fashion & Retail": "Mode & Commerce",
+    "Beauty & Wellness": "Beauté & Bien-être",
+    "Events & Entertainment": "Événements & Divertissement",
+    "Arts & Culture": "Arts & Culture",
+    "Other": "Autre",
+    "Tell us which one": "Précisez",
+    "Please choose a category.": "Veuillez choisir une catégorie.",
+    "Which services are you interested in?": "Quels services vous intéressent ?",
+    "Choose all that apply": "Plusieurs choix possibles",
+    "Content & video production": "Création de contenu & production vidéo",
+    "Video editing": "Montage vidéo",
+    "Scriptwriting": "Écriture de scripts",
+    "Marketing strategy": "Stratégie marketing",
+    "Please choose at least one service.": "Veuillez choisir au moins un service.",
+    "What are you primarily looking to achieve?": "Quel est votre objectif principal ?",
+    "More customers and sales quickly": "Plus de clients et de ventes rapidement",
+    "A strong brand image long term": "Une image de marque forte sur le long terme",
+    "Promote an event, launch or product": "Promouvoir un événement, un lancement ou un produit",
+    "All of the above": "Tout cela à la fois",
+    "Please choose one.": "Veuillez choisir une réponse.",
+    "What is your approximate monthly revenue?": "Quel est votre chiffre d'affaires mensuel approximatif ?",
+    "0 to 5,000 TND": "0 à 5 000 TND",
+    "5,000 to 10,000 TND": "5 000 à 10 000 TND",
+    "10,000 to 25,000 TND": "10 000 à 25 000 TND",
+    "25,000 to 50,000 TND": "25 000 à 50 000 TND",
+    "50,000 TND and more": "50 000 TND et plus",
+    "How much do you invest in marketing and content each month?": "Combien investissez-vous chaque mois en marketing et en contenu ?",
+    "Nothing yet": "Rien pour l'instant",
+    "Up to 500 TND": "Jusqu'à 500 TND",
+    "500 to 1,500 TND": "500 à 1 500 TND",
+    "1,500 to 3,000 TND": "1 500 à 3 000 TND",
+    "3,000 TND and more": "3 000 TND et plus",
+    "Where is your business located?": "Où se situe votre activité ?",
+    "Grand Tunis": "Grand Tunis",
+    "Elsewhere in Tunisia": "Ailleurs en Tunisie",
+    "Outside Tunisia": "Hors de Tunisie",
+    "Your full name": "Votre nom complet",
+    "Please enter your name.": "Veuillez saisir votre nom.",
+    "Business or brand name": "Nom de l'entreprise ou de la marque",
+    "Please enter your business name.": "Veuillez saisir le nom de votre entreprise.",
+    "Your role": "Votre rôle",
+    "Owner / Founder": "Propriétaire / Fondateur",
+    "Manager": "Gérant",
+    "Marketing / Communication": "Marketing / Communication",
+    "Phone number": "Numéro de téléphone",
+    "WhatsApp if possible": "WhatsApp si possible",
+    "Please enter a valid phone number.": "Veuillez saisir un numéro de téléphone valide.",
+    "Email": "E-mail",
+    "Optional": "Facultatif",
+    "This email doesn't look right.": "Cet e-mail semble incorrect.",
+    "Instagram, Facebook or TikTok page": "Page Instagram, Facebook ou TikTok",
+    "Optional. Paste a link or your @handle": "Facultatif. Collez un lien ou votre @identifiant",
+    "@yourbrand": "@votremarque",
+    "How do you create content today?": "Comment créez-vous votre contenu aujourd'hui ?",
+    "We don't post much yet": "Nous publions encore peu",
+    "Ourselves, with a phone": "Nous-mêmes, avec un téléphone",
+    "With a freelancer": "Avec un freelance",
+    "With another agency": "Avec une autre agence",
+    "What kind of collaboration are you looking for?": "Quel type de collaboration recherchez-vous ?",
+    "A one-time project": "Un projet ponctuel",
+    "Monthly content": "Du contenu mensuel",
+    "Not sure yet, I'd like advice": "Pas encore sûr, j'aimerais un conseil",
+    "When would you like to start?": "Quand souhaitez-vous commencer ?",
+    "As soon as possible": "Dès que possible",
+    "Within a month": "Dans le mois",
+    "In 1 to 3 months": "Dans 1 à 3 mois",
+    "Just exploring": "Je me renseigne",
+    "Tell us about your project": "Parlez-nous de votre projet",
+    "Optional. What you have in mind, an example you like, a date to respect": "Facultatif. Ce que vous avez en tête, un exemple que vous aimez, une date à respecter"
+  },
+  ar: {
+    "Work with No9ta": "اعملوا مع No9ta",
+    "Start a project": "ابدأ مشروعك",
+    "Let's see if|we're a fit": "لنتعرّف|عليكم",
+    "No9ta Creative Studio works with brands that want content people stop to watch: video production, editing, scriptwriting and marketing strategy. Tell us about your business and we'll get back to you.": "تعمل No9ta Creative Studio مع العلامات التجارية التي تريد محتوى يتوقف الناس لمشاهدته: إنتاج الفيديو، المونتاج، كتابة السكريبت واستراتيجية التسويق. حدّثونا عن نشاطكم وسنتواصل معكم.",
+    "16 short questions · about 2 minutes": "16 سؤالاً قصيراً · حوالي دقيقتين",
+    "Welcome back. Your earlier answers are saved on this device.": "مرحباً بعودتكم. إجاباتكم السابقة محفوظة على هذا الجهاز.",
+    "Start": "ابدأ",
+    "Continue where I left off": "المتابعة من حيث توقفت",
+    "Start over": "البدء من جديد",
+    "Back": "رجوع",
+    "Continue": "متابعة",
+    "Save answer": "حفظ الإجابة",
+    "Send my request": "إرسال طلبي",
+    "Sending": "جارٍ الإرسال",
+    "Press a letter to choose, Enter to continue": "اضغطوا على حرف للاختيار و Enter للمتابعة",
+    "Your fit": "ملفكم",
+    "About you": "عنكم",
+    "Your content": "محتواكم",
+    "Review": "مراجعة",
+    "Almost done": "أوشكنا على الانتهاء",
+    "Question {n} of {N}": "السؤال {n} من {N}",
+    "Check your answers": "راجعوا إجاباتكم",
+    "Tap any answer to change it, then send your request.": "اضغطوا على أي إجابة لتعديلها ثم أرسلوا طلبكم.",
+    "Edit": "تعديل",
+    "Not answered": "بدون إجابة",
+    "This form is not connected yet: the Web3Forms access key is missing.": "هذا النموذج غير موصول بعد: مفتاح Web3Forms مفقود.",
+    "We could not send your request. Your answers are saved. Check your connection and try again.": "تعذّر إرسال طلبكم. إجاباتكم محفوظة. تحققوا من الاتصال وحاولوا مرة أخرى.",
+    "Request sent": "تم إرسال الطلب",
+    "Thank you": "شكراً",
+    "Thank you, {name}": "شكراً، {name}",
+    "We got your request{for}. The No9ta team will review it and contact you{on} within 48 hours.": "وصلنا طلبكم{for}. سيدرسه فريق No9ta ويتواصل معكم{on} خلال 48 ساعة.",
+    " for {b}": " بخصوص {b}",
+    " on {p}": " على الرقم {p}",
+    "Message us on WhatsApp": "راسلونا على واتساب",
+    "Follow us on Instagram": "تابعونا على إنستغرام",
+    "Hello No9ta, I just sent a request{for}.": "مرحباً No9ta، أرسلت للتو طلباً{for}.",
+    "Tunis": "تونس",
+
+    "Which category best describes your business?": "ما الفئة الأنسب لوصف نشاطكم؟",
+    "Fitness & Sport": "اللياقة والرياضة",
+    "Food & Restaurants": "المطاعم والأغذية",
+    "Fashion & Retail": "الأزياء والتجارة",
+    "Beauty & Wellness": "الجمال والعناية",
+    "Events & Entertainment": "الفعاليات والترفيه",
+    "Arts & Culture": "الفنون والثقافة",
+    "Other": "أخرى",
+    "Tell us which one": "حدّدوا الفئة",
+    "Please choose a category.": "يرجى اختيار فئة.",
+    "Which services are you interested in?": "ما الخدمات التي تهمّكم؟",
+    "Choose all that apply": "يمكن اختيار أكثر من خدمة",
+    "Content & video production": "صناعة المحتوى وإنتاج الفيديو",
+    "Video editing": "مونتاج الفيديو",
+    "Scriptwriting": "كتابة السكريبت",
+    "Marketing strategy": "استراتيجية التسويق",
+    "Please choose at least one service.": "يرجى اختيار خدمة واحدة على الأقل.",
+    "What are you primarily looking to achieve?": "ما هدفكم الأساسي؟",
+    "More customers and sales quickly": "زبائن ومبيعات أكثر بسرعة",
+    "A strong brand image long term": "صورة قوية للعلامة على المدى الطويل",
+    "Promote an event, launch or product": "الترويج لفعالية أو إطلاق أو منتج",
+    "All of the above": "كل ما سبق",
+    "Please choose one.": "يرجى اختيار إجابة.",
+    "What is your approximate monthly revenue?": "ما هو رقم معاملاتكم الشهري التقريبي؟",
+    "0 to 5,000 TND": "من 0 إلى 5,000 د.ت",
+    "5,000 to 10,000 TND": "من 5,000 إلى 10,000 د.ت",
+    "10,000 to 25,000 TND": "من 10,000 إلى 25,000 د.ت",
+    "25,000 to 50,000 TND": "من 25,000 إلى 50,000 د.ت",
+    "50,000 TND and more": "50,000 د.ت فأكثر",
+    "How much do you invest in marketing and content each month?": "كم تستثمرون شهرياً في التسويق والمحتوى؟",
+    "Nothing yet": "لا شيء حالياً",
+    "Up to 500 TND": "حتى 500 د.ت",
+    "500 to 1,500 TND": "من 500 إلى 1,500 د.ت",
+    "1,500 to 3,000 TND": "من 1,500 إلى 3,000 د.ت",
+    "3,000 TND and more": "3,000 د.ت فأكثر",
+    "Where is your business located?": "أين يقع نشاطكم؟",
+    "Grand Tunis": "تونس الكبرى",
+    "Elsewhere in Tunisia": "مكان آخر في تونس",
+    "Outside Tunisia": "خارج تونس",
+    "Your full name": "الاسم الكامل",
+    "Please enter your name.": "يرجى إدخال الاسم.",
+    "Business or brand name": "اسم المؤسسة أو العلامة",
+    "Please enter your business name.": "يرجى إدخال اسم المؤسسة.",
+    "Your role": "صفتكم",
+    "Owner / Founder": "المالك / المؤسس",
+    "Manager": "مدير",
+    "Marketing / Communication": "التسويق / الاتصال",
+    "Phone number": "رقم الهاتف",
+    "WhatsApp if possible": "واتساب إن أمكن",
+    "Please enter a valid phone number.": "يرجى إدخال رقم هاتف صحيح.",
+    "Email": "البريد الإلكتروني",
+    "Optional": "اختياري",
+    "This email doesn't look right.": "البريد الإلكتروني غير صحيح.",
+    "Instagram, Facebook or TikTok page": "صفحة إنستغرام أو فيسبوك أو تيك توك",
+    "Optional. Paste a link or your @handle": "اختياري. ألصقوا رابطاً أو اسم الحساب",
+    "How do you create content today?": "كيف تصنعون محتواكم اليوم؟",
+    "We don't post much yet": "لا ننشر كثيراً بعد",
+    "Ourselves, with a phone": "بأنفسنا، بالهاتف",
+    "With a freelancer": "مع مستقل (فريلانسر)",
+    "With another agency": "مع وكالة أخرى",
+    "What kind of collaboration are you looking for?": "ما نوع التعاون الذي تبحثون عنه؟",
+    "A one-time project": "مشروع واحد",
+    "Monthly content": "محتوى شهري",
+    "Not sure yet, I'd like advice": "لست متأكداً بعد، أريد نصيحة",
+    "When would you like to start?": "متى تريدون البدء؟",
+    "As soon as possible": "في أقرب وقت",
+    "Within a month": "خلال شهر",
+    "In 1 to 3 months": "خلال شهر إلى 3 أشهر",
+    "Just exploring": "أستكشف فقط",
+    "Tell us about your project": "حدّثونا عن مشروعكم",
+    "Optional. What you have in mind, an example you like, a date to respect": "اختياري. ما تفكرون فيه، مثال يعجبكم، موعد يجب احترامه"
+  }
+};
+const LANG_NAMES = { en: 'English', fr: 'French', ar: 'Arabic' };
+let lang = 'en', resumed = false;
+const tr = s => (I18N[lang] && I18N[lang][s]) || s;
+const bound = [];
+function bind(sel, mode) {
+  document.querySelectorAll(sel).forEach(el => {
+    const src = mode === 'ph' ? el.placeholder : mode === 'first' ? el.firstChild.textContent.trim() : el.textContent.trim();
+    bound.push({ el, mode, src });
+  });
 }
+bind('#intro .kicker, .lead, .meta, #resume, #restart, #back, #keys, .hint, .err, .review h2, .review > p, .thanks .kicker, #waLink, #igLink, footer span:last-child', 'text');
+bind('legend, .label, .opt span', 'first');
+bind('input[placeholder]', 'ph');
+
+function setLang(l) {
+  if (sending) return;
+  lang = l === 'fr' || l === 'ar' ? l : 'en';
+  const h = document.documentElement;
+  h.lang = lang; h.dir = lang === 'ar' ? 'rtl' : 'ltr';
+  bound.forEach(b => {
+    const v = tr(b.src);
+    if (b.mode === 'ph') b.el.placeholder = v;
+    else if (b.mode === 'first') b.el.firstChild.textContent = v + ' ';
+    else b.el.textContent = v;
+  });
+  const h1 = $('h1');
+  h1.textContent = '';
+  tr("Let's see if|we're a fit").split('|').forEach((p, i) => { if (i) h1.append(document.createElement('br')); h1.append(p); });
+  document.title = tr('Work with No9ta');
+  document.querySelectorAll('#lang button').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.lang === lang)));
+  $('start').textContent = tr(resumed ? 'Continue where I left off' : 'Start');
+  if (pos >= 0) paint();
+  if (pos === N) buildReview();
+  try { localStorage.setItem('no9ta-lang', lang); } catch (e) {}
+}
+$('lang').addEventListener('click', e => { const b = e.target.closest('button'); if (b) setLang(b.dataset.lang); });
+
+// Text that depends on the current screen
+function paint() {
+  const isQ = pos < N;
+  next.textContent = tr(pos === N ? 'Send my request' : toReview ? 'Save answer' : 'Continue');
+  $('ptitle').textContent = tr(isQ ? qs[pos].dataset.part : 'Review');
+  $('pcount').textContent = isQ ? tr('Question {n} of {N}').replace('{n}', pos + 1).replace('{N}', N) : tr('Almost done');
+}
+
+// Prepare questions: part names, focus targets, letter hints
+let part = '';
+qs.forEach(q => {
+  if (q.dataset.part) part = q.dataset.part; else q.dataset.part = part;
+  q.tabIndex = -1;
+  q.hidden = true;
+  q.querySelectorAll('.opt').forEach((o, i) => {
+    const k = document.createElement('kbd');
+    k.textContent = String.fromCharCode(65 + i);
+    k.setAttribute('aria-hidden', 'true');
+    o.querySelector('span').append(k);
+  });
+});
 
 function valid(q) {
   const kind = q.dataset.required;
@@ -334,41 +688,196 @@ function valid(q) {
   return true;
 }
 
-function validateStep() {
-  let first = null;
-  steps[current].querySelectorAll('.q').forEach(q => {
-    const ok = valid(q);
-    q.classList.toggle('bad', !ok);
-    if (!ok && !first) first = q;
-  });
-  if (first) {
-    first.scrollIntoView({ block: 'center' });
-    const f = first.querySelector('input,textarea');
-    if (f) f.focus({ preventScroll: true });
-  }
-  return !first;
+function syncOther() {
+  const other = $('catOther');
+  const pick = form.querySelector('input[name="Category"]:checked');
+  other.hidden = !(pick && pick.value === 'Other');
 }
 
+// ---- Saved answers ----
+function save() {
+  try {
+    const d = {};
+    for (const el of form.elements) {
+      if (!el.name || el.name === 'botcheck') continue;
+      if (el.type === 'radio') { if (el.checked) d[el.name] = el.value; }
+      else if (el.type === 'checkbox') { if (el.checked) (d[el.name] = d[el.name] || []).push(el.value); }
+      else if (el.value) d[el.name] = el.value;
+    }
+    localStorage.setItem(STORE, JSON.stringify({ d, pos }));
+  } catch (e) {}
+}
+function restore() {
+  try {
+    const s = JSON.parse(localStorage.getItem(STORE));
+    if (!s || !s.d || !Object.keys(s.d).length) return null;
+    for (const el of form.elements) {
+      if (!el.name || !(el.name in s.d)) continue;
+      const v = s.d[el.name];
+      if (el.type === 'radio') el.checked = el.value === v;
+      else if (el.type === 'checkbox') el.checked = Array.isArray(v) && v.includes(el.value);
+      else el.value = v;
+    }
+    syncOther();
+    return s;
+  } catch (e) { return null; }
+}
+function forget() { try { localStorage.removeItem(STORE); } catch (e) {} }
+
+// ---- Screens ----
+function show(i, dir = 1) {
+  clearTimeout(timer);
+  pos = i;
+  const isQ = i >= 0 && i < N;
+  intro.hidden = i !== -1;
+  form.hidden = i < 0;
+  progress.hidden = i < 0;
+  qs.forEach((q, n) => q.hidden = n !== i);
+  review.hidden = i !== N;
+  formerr.style.display = 'none';
+  $('keys').hidden = !(isQ && qs[i].querySelector('.opt'));
+  $('lang').hidden = false;
+  if (i >= 0) { $('bar').style.width = (i / N * 100) + '%'; paint(); }
+  if (i === N) buildReview();
+
+  const el = i === -1 ? intro : isQ ? qs[i] : review;
+  if (!reduce) {
+    el.classList.remove('in-l', 'in-r');
+    void el.offsetWidth;
+    el.classList.add(dir > 0 ? 'in-r' : 'in-l');
+  }
+  if (window.scrollY > 0) window.scrollTo(0, 0);
+  if (isQ) {
+    const field = qs[i].querySelector('.opt') ? null : qs[i].querySelector('input,textarea');
+    (field || qs[i]).focus({ preventScroll: true });
+  } else if (i === N) review.focus({ preventScroll: true });
+  save();
+}
+
+function advance() {
+  if (sending || pos < 0) return;
+  if (pos === N) return send();
+  const q = qs[pos];
+  if (!valid(q)) {
+    q.classList.add('bad');
+    if (!reduce) { q.classList.remove('shake', 'in-l', 'in-r'); void q.offsetWidth; q.classList.add('shake'); }
+    const f = q.querySelector('.opt') ? null : q.querySelector('input,textarea');
+    if (f) f.focus({ preventScroll: true });
+    return;
+  }
+  q.classList.remove('bad');
+  if (toReview) { toReview = false; return show(N, 1); }
+  show(pos + 1, 1);
+}
+function goBack() {
+  if (sending) return;
+  if (toReview) { toReview = false; return show(N, -1); }
+  show(pos - 1, -1);
+}
+function autoAdvance() {
+  const at = pos;
+  clearTimeout(timer);
+  timer = setTimeout(() => { if (pos === at) advance(); }, reduce ? 120 : 300);
+}
+
+// ---- Review ----
+function titleOf(q) { return q.querySelector('legend,.label').firstChild.textContent.trim(); }
+function answerOf(q) {
+  if (q.querySelector('.opt')) {
+    let a = [...q.querySelectorAll('.opt input:checked')].map(i => i.nextElementSibling.firstChild.textContent.trim()).join(', ');
+    const o = q.querySelector('.other');
+    if (o && !o.hidden && o.value.trim()) a += ': ' + o.value.trim();
+    return a;
+  }
+  return q.querySelector('input,textarea').value.trim();
+}
+function buildReview() {
+  const list = $('rvlist');
+  list.textContent = '';
+  qs.forEach((q, n) => {
+    const b = document.createElement('button');
+    b.type = 'button'; b.className = 'rv';
+    const a = answerOf(q);
+    const rq = document.createElement('span'); rq.className = 'rq'; rq.textContent = titleOf(q);
+    const ra = document.createElement('span'); ra.className = 'ra' + (a ? '' : ' none'); ra.textContent = a || tr('Not answered');
+    const re = document.createElement('span'); re.className = 're'; re.textContent = tr('Edit');
+    b.append(rq, re, ra);
+    b.addEventListener('click', () => { toReview = true; show(n, -1); });
+    list.append(b);
+  });
+}
+
+// ---- Events ----
 form.addEventListener('change', e => {
   const q = e.target.closest('.q');
   if (q && q.classList.contains('bad') && valid(q)) q.classList.remove('bad');
   if (e.target.name === 'Category') {
-    const other = document.getElementById('catOther');
-    other.hidden = e.target.value !== 'Other';
-    if (!other.hidden) other.focus();
+    syncOther();
+    if (e.target.value === 'Other') $('catOther').focus();
   }
+  save();
 });
 form.addEventListener('input', e => {
   const q = e.target.closest('.q');
   if (q && q.classList.contains('bad') && valid(q)) q.classList.remove('bad');
+  save();
 });
-
-back.addEventListener('click', () => show(current - 1));
-
-form.addEventListener('submit', async e => {
+// Tap or click on a single-choice answer moves on (keyboard arrows do not)
+form.addEventListener('click', e => {
+  const t = e.target;
+  if (t.type === 'radio' && e.detail > 0 && !t.dataset.other) autoAdvance();
+});
+document.addEventListener('keydown', e => {
+  if (e.ctrlKey || e.metaKey || e.altKey || sending) return;
+  const t = e.target, tag = t.tagName;
+  const typing = tag === 'TEXTAREA' || tag === 'SELECT' || (tag === 'INPUT' && !/radio|checkbox/.test(t.type));
+  if (typing) return;
+  if (e.key === 'Enter' && tag !== 'BUTTON' && tag !== 'INPUT' && tag !== 'A') {
+    if (pos === -1) { e.preventDefault(); start(); }
+    else if (pos < N) { e.preventDefault(); advance(); }
+    return;
+  }
+  if (pos < 0 || pos >= N || e.key.length !== 1) return;
+  const opts = [...qs[pos].querySelectorAll('.opt input')];
+  const idx = e.key.toUpperCase().charCodeAt(0) - 65;
+  if (idx < 0 || idx >= opts.length) return;
   e.preventDefault();
-  if (!validateStep()) return;
-  if (current < steps.length - 1) return show(current + 1);
+  const o = opts[idx];
+  o.checked = o.type === 'radio' ? true : !o.checked;
+  o.dispatchEvent(new Event('change', { bubbles: true }));
+  if (o.type === 'radio' && !o.dataset.other) autoAdvance();
+});
+back.addEventListener('click', goBack);
+form.addEventListener('submit', e => { e.preventDefault(); advance(); });
+
+// ---- Welcome ----
+let resumeAt = 0;
+function start() { show(resumeAt, 1); }
+$('start').addEventListener('click', start);
+$('restart').addEventListener('click', () => {
+  forget(); form.reset(); syncOther();
+  qs.forEach(q => q.classList.remove('bad'));
+  resumeAt = 0;
+  $('resume').hidden = true; $('restart').hidden = true;
+  resumed = false;
+  $('start').textContent = tr('Start');
+});
+const saved = restore();
+if (saved) {
+  const firstBad = qs.findIndex(q => !valid(q));
+  const was = Math.max(0, Math.min(N, saved.pos | 0));
+  resumeAt = firstBad === -1 ? was : Math.min(was, firstBad);
+  $('resume').hidden = false; $('restart').hidden = false;
+  resumed = true;
+}
+let firstLang = 'en';
+try { firstLang = localStorage.getItem('no9ta-lang') || (navigator.language || '').slice(0, 2); } catch (e) {}
+setLang(firstLang);
+
+// ---- Send ----
+async function send() {
+  const firstBad = qs.findIndex(q => !valid(q));
+  if (firstBad !== -1) { toReview = true; show(firstBad, -1); qs[firstBad].classList.add('bad'); return; }
 
   const fd = new FormData(form);
   if (fd.get('botcheck')) return;
@@ -378,14 +887,15 @@ form.addEventListener('submit', async e => {
     if (k === 'Services' || k === 'botcheck' || !String(v).trim()) continue;
     data[k] = v;
   }
+  data.Language = LANG_NAMES[lang];
   data.subject = 'New request: ' + (data.Business || data.Name || 'No9ta form');
 
   if (WEB3FORMS_KEY.startsWith('YOUR_')) {
-    formerr.textContent = 'This form is not connected yet: the Web3Forms access key is missing.';
+    formerr.textContent = tr('This form is not connected yet: the Web3Forms access key is missing.');
     formerr.style.display = 'block';
     return;
   }
-  next.disabled = true; next.textContent = 'Sending';
+  sending = true; next.disabled = true; back.disabled = true; next.textContent = tr('Sending');
   try {
     const res = await fetch('https://api.web3forms.com/submit', {
       method: 'POST',
@@ -394,16 +904,53 @@ form.addEventListener('submit', async e => {
     });
     const out = await res.json();
     if (!out.success) throw new Error(out.message || 'Submission failed');
-    form.hidden = true;
-    document.getElementById('steps').hidden = true;
-    const t = document.getElementById('thanks');
-    t.style.display = 'block'; t.focus(); t.scrollIntoView({ block: 'start' });
+    forget();
+    thanks(data);
   } catch (err) {
-    formerr.textContent = 'We could not send your request. Check your connection and try again.';
+    formerr.textContent = tr('We could not send your request. Your answers are saved. Check your connection and try again.');
     formerr.style.display = 'block';
-    next.disabled = false; next.textContent = 'Send my request';
+    next.textContent = tr('Send my request');
+  } finally {
+    sending = false; next.disabled = false; back.disabled = false;
   }
-});
+}
+
+function thanks(data) {
+  intro.hidden = true; form.hidden = true; progress.hidden = true;
+  const first = String(data.Name || '').trim().split(/\s+/)[0];
+  $('lang').hidden = true;
+  const forB = data.Business ? tr(' for {b}').replace('{b}', data.Business) : '';
+  const onP = data.Phone ? tr(' on {p}').replace('{p}', '\u2066' + data.Phone + '\u2069') : '';
+  $('thanksTitle').textContent = first ? tr('Thank you, {name}').replace('{name}', first) : tr('Thank you');
+  $('thanksText').textContent = tr('We got your request{for}. The No9ta team will review it and contact you{on} within 48 hours.').replace('{for}', forB).replace('{on}', onP);
+  if (WHATSAPP_NUMBER) {
+    const msg = tr('Hello No9ta, I just sent a request{for}.').replace('{for}', forB);
+    $('waLink').href = 'https://wa.me/' + WHATSAPP_NUMBER.replace(/\D/g, '') + '?text=' + encodeURIComponent(msg);
+    $('waLink').hidden = false;
+  }
+  if (INSTAGRAM_URL) { $('igLink').href = INSTAGRAM_URL; $('igLink').hidden = false; }
+  $('thanksLinks').hidden = !(WHATSAPP_NUMBER || INSTAGRAM_URL);
+  const t = $('thanks');
+  t.style.display = 'block';
+  if (!reduce) { t.classList.add('in-r'); confetti(); }
+  window.scrollTo(0, 0);
+  t.focus({ preventScroll: true });
+}
+
+function confetti() {
+  const colors = ['#e63946', '#c81d25', '#ffffff', '#b9b9b9'];
+  for (let i = 0; i < 40; i++) {
+    const c = document.createElement('i');
+    c.className = 'confetti';
+    c.style.left = Math.random() * 100 + 'vw';
+    c.style.background = colors[i % colors.length];
+    c.style.animationDuration = 1.6 + Math.random() * 1.4 + 's';
+    c.style.animationDelay = Math.random() * 0.4 + 's';
+    c.style.transform = 'rotate(' + Math.random() * 360 + 'deg)';
+    document.body.append(c);
+    setTimeout(() => c.remove(), 3600);
+  }
+}
 </script>
 </body>
 </html>

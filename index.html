@@ -1,0 +1,409 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Work with No9ta</title>
+<meta name="description" content="Tell No9ta Creative Studio about your business and your project.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat:wght@400;500;600;700&family=Cairo:wght@700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0b0b0b; --panel:#141414; --line:rgba(255,255,255,.14); --line-strong:rgba(255,255,255,.28);
+  --text:#ffffff; --muted:#b9b9b9; --red:#c81d25; --red-hi:#e63946; --red-tint:#2a0d10; --err:#ff7a82;
+}
+*{box-sizing:border-box}
+html{background:var(--bg)}
+body{
+  margin:0; min-height:100vh; color:var(--text); font-family:'Montserrat',system-ui,sans-serif; font-size:16px; line-height:1.5;
+}
+body::before{
+  content:""; position:fixed; inset:0; z-index:-1; pointer-events:none;
+  background:
+    radial-gradient(900px 620px at 88% -5%, rgba(200,29,37,.42), rgba(200,29,37,0) 70%),
+    radial-gradient(rgba(255,255,255,.07) 1px, transparent 1px) 0 0/28px 28px;
+}
+.wrap{max-width:720px; margin:0 auto; padding:40px 20px 72px}
+header{display:flex; align-items:center; justify-content:space-between; gap:16px; margin-bottom:44px}
+.brand{display:flex; align-items:center; gap:14px}
+.brand img{width:52px; height:52px; border-radius:50%; border:1px solid var(--line-strong)}
+.brand b{display:block; font-size:22px; letter-spacing:.5px; line-height:1}
+.brand span{display:block; font-size:11px; letter-spacing:4px; text-transform:uppercase; color:var(--muted); margin-top:5px}
+.ar{font-family:'Cairo',sans-serif; font-weight:700; font-size:22px; color:var(--red-hi)}
+.kicker{font-weight:700; font-size:13px; letter-spacing:6px; text-transform:uppercase; color:var(--red-hi)}
+h1{
+  margin:10px 0 18px; font-family:'Bebas Neue',sans-serif; font-weight:400; font-size:clamp(64px,15vw,116px);
+  line-height:.88; letter-spacing:1px; text-transform:uppercase; padding-left:20px; border-left:6px solid var(--red);
+}
+.lead{color:#dcdcdc; max-width:56ch; margin:0 0 36px}
+
+.steps{display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:10px; margin:0 0 34px; padding:0; list-style:none}
+.steps li{font-size:12px; font-weight:600; letter-spacing:1.5px; text-transform:uppercase; color:#8f8f8f; padding-top:12px; border-top:3px solid var(--line)}
+.steps li.on{color:var(--text); border-top-color:var(--red)}
+.steps li.done{color:var(--muted); border-top-color:#7a1218}
+
+fieldset{border:0; margin:0; padding:0; min-width:0}
+.q{padding:26px 0; border-top:1px solid var(--line)}
+.q:first-of-type{border-top:0; padding-top:0}
+legend{float:left; width:100%}
+legend ~ *{clear:both}
+legend,.label{display:block; padding:0; font-weight:700; font-size:19px; line-height:1.3; margin-bottom:6px}
+.req{color:var(--red-hi)}
+.hint{display:block; color:var(--muted); font-size:14px; margin-bottom:14px}
+legend{margin-bottom:14px}
+.label + input,.label + textarea{margin-top:12px}
+legend + .hint{margin-top:-8px}
+
+.opts{display:flex; flex-wrap:wrap; gap:10px}
+.opt{position:relative}
+.opt input{position:absolute; opacity:0; inset:0; width:100%; height:100%; margin:0; cursor:pointer}
+.opt span{
+  display:flex; align-items:center; gap:10px; min-height:48px; padding:10px 20px; border-radius:999px;
+  background:var(--panel); border:1px solid var(--line-strong); font-weight:500; font-size:15px;
+  transition:border-color .15s, background .15s;
+}
+.opt span::before{content:""; width:16px; height:16px; flex:0 0 auto; border-radius:50%; border:2px solid #8a8a8a; transition:.15s}
+.opt.box span::before{border-radius:4px}
+.opt input:hover + span{border-color:var(--red-hi)}
+.opt input:focus-visible + span{outline:2px solid #fff; outline-offset:2px}
+.opt input:checked + span{background:var(--red-tint); border-color:var(--red-hi)}
+.opt input:checked + span::before{background:var(--red-hi); border-color:var(--red-hi); box-shadow:inset 0 0 0 3px var(--red-tint)}
+
+input[type=text],input[type=tel],input[type=email],textarea{
+  width:100%; min-height:50px; padding:12px 16px; border-radius:12px; background:var(--panel); color:var(--text);
+  border:1px solid var(--line-strong); font:inherit;
+}
+textarea{min-height:130px; resize:vertical}
+input::placeholder,textarea::placeholder{color:#7d7d7d}
+input:focus,textarea:focus{outline:none; border-color:var(--red-hi); box-shadow:0 0 0 2px rgba(230,57,70,.35)}
+.other{margin-top:12px}
+.err{display:none; color:var(--err); font-size:14px; font-weight:600; margin-top:10px}
+.q.bad .err{display:block}
+
+.nav{display:flex; justify-content:space-between; align-items:center; gap:12px; margin-top:34px; padding-top:26px; border-top:1px solid var(--line)}
+button{font:inherit; cursor:pointer}
+.btn{
+  min-height:52px; padding:0 30px; border:0; border-radius:999px; background:var(--red); color:#fff;
+  font-weight:700; letter-spacing:1.5px; text-transform:uppercase; font-size:14px; box-shadow:0 12px 32px rgba(200,29,37,.35);
+}
+.btn:hover{background:var(--red-hi)}
+.btn[disabled]{opacity:.6; cursor:wait}
+.back{min-height:52px; padding:0 8px; background:none; border:0; color:var(--muted); font-weight:600; letter-spacing:1px; text-transform:uppercase; font-size:13px}
+.back:hover{color:#fff}
+.btn:focus-visible,.back:focus-visible{outline:2px solid #fff; outline-offset:3px}
+.formerr{display:none; margin-top:18px; padding:14px 16px; border-radius:12px; border:1px solid var(--err); color:var(--err); font-size:14px; font-weight:600}
+.hp{position:absolute; left:-9999px}
+
+.thanks{display:none; padding:20px 0}
+.thanks h2{margin:0 0 14px; font-family:'Bebas Neue',sans-serif; font-weight:400; font-size:clamp(52px,12vw,88px); line-height:.9; text-transform:uppercase}
+.thanks p{color:#dcdcdc; max-width:50ch; margin:0 0 10px}
+footer{margin-top:56px; padding-top:22px; border-top:1px solid var(--line); display:flex; justify-content:space-between; gap:12px; flex-wrap:wrap; font-size:12px; letter-spacing:3px; text-transform:uppercase; color:#8f8f8f}
+[hidden]{display:none !important}
+@media (max-width:520px){ .opt{flex:1 1 100%} .steps li{font-size:10px; letter-spacing:1px} }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="brand">
+      <img src="data:image/jpeg;base64,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" alt="No9ta logo">
+      <div><b>No9ta</b><span>Creative Studio</span></div>
+    </div>
+    <div class="ar" lang="ar" dir="rtl">نقطة</div>
+  </header>
+
+  <main>
+    <div id="intro">
+      <div class="kicker">Start a project</div>
+      <h1>Let's see if<br>we're a fit</h1>
+      <p class="lead">No9ta Creative Studio works with brands that want content people stop to watch: video production, editing, scriptwriting and marketing strategy. Tell us about your business and we'll get back to you.</p>
+    </div>
+
+    <ol class="steps" id="steps" aria-label="Progress">
+      <li class="on">1. Your fit</li><li>2. About you</li><li>3. Your content</li>
+    </ol>
+
+    <form id="form" novalidate>
+      <input class="hp" type="checkbox" name="botcheck" tabindex="-1" autocomplete="off" aria-hidden="true">
+
+      <!-- STEP 1 -->
+      <section class="step" data-step="0">
+        <fieldset class="q" data-required="radio">
+          <legend>Which category best describes your business? <span class="req">*</span></legend>
+          <div class="opts">
+            <label class="opt"><input type="radio" name="Category" value="Fitness & Sport"><span>Fitness &amp; Sport</span></label>
+            <label class="opt"><input type="radio" name="Category" value="Food & Restaurants"><span>Food &amp; Restaurants</span></label>
+            <label class="opt"><input type="radio" name="Category" value="Fashion & Retail"><span>Fashion &amp; Retail</span></label>
+            <label class="opt"><input type="radio" name="Category" value="Beauty & Wellness"><span>Beauty &amp; Wellness</span></label>
+            <label class="opt"><input type="radio" name="Category" value="Events & Entertainment"><span>Events &amp; Entertainment</span></label>
+            <label class="opt"><input type="radio" name="Category" value="Arts & Culture"><span>Arts &amp; Culture</span></label>
+            <label class="opt"><input type="radio" name="Category" value="Other" data-other="catOther"><span>Other</span></label>
+          </div>
+          <input class="other" id="catOther" type="text" name="Category (other)" placeholder="Tell us which one" aria-label="Other category" hidden>
+          <div class="err">Please choose a category.</div>
+        </fieldset>
+
+        <fieldset class="q" data-required="check">
+          <legend>Which services are you interested in? <span class="req">*</span></legend>
+          <span class="hint">Choose all that apply</span>
+          <div class="opts">
+            <label class="opt box"><input type="checkbox" name="Services" value="Content & video production"><span>Content &amp; video production</span></label>
+            <label class="opt box"><input type="checkbox" name="Services" value="Video editing"><span>Video editing</span></label>
+            <label class="opt box"><input type="checkbox" name="Services" value="Scriptwriting"><span>Scriptwriting</span></label>
+            <label class="opt box"><input type="checkbox" name="Services" value="Marketing strategy"><span>Marketing strategy</span></label>
+          </div>
+          <div class="err">Please choose at least one service.</div>
+        </fieldset>
+
+        <fieldset class="q" data-required="radio">
+          <legend>What are you primarily looking to achieve? <span class="req">*</span></legend>
+          <div class="opts">
+            <label class="opt"><input type="radio" name="Goal" value="More customers and sales quickly"><span>More customers and sales quickly</span></label>
+            <label class="opt"><input type="radio" name="Goal" value="Strong brand image long term"><span>A strong brand image long term</span></label>
+            <label class="opt"><input type="radio" name="Goal" value="Promote an event, launch or product"><span>Promote an event, launch or product</span></label>
+            <label class="opt"><input type="radio" name="Goal" value="All of the above"><span>All of the above</span></label>
+          </div>
+          <div class="err">Please choose one.</div>
+        </fieldset>
+
+        <fieldset class="q" data-required="radio">
+          <legend>What is your approximate monthly revenue? <span class="req">*</span></legend>
+          <div class="opts">
+            <label class="opt"><input type="radio" name="Monthly revenue" value="0 to 5,000 TND"><span>0 to 5,000 TND</span></label>
+            <label class="opt"><input type="radio" name="Monthly revenue" value="5,000 to 10,000 TND"><span>5,000 to 10,000 TND</span></label>
+            <label class="opt"><input type="radio" name="Monthly revenue" value="10,000 to 25,000 TND"><span>10,000 to 25,000 TND</span></label>
+            <label class="opt"><input type="radio" name="Monthly revenue" value="25,000 to 50,000 TND"><span>25,000 to 50,000 TND</span></label>
+            <label class="opt"><input type="radio" name="Monthly revenue" value="50,000 TND and more"><span>50,000 TND and more</span></label>
+          </div>
+          <div class="err">Please choose one.</div>
+        </fieldset>
+
+        <fieldset class="q" data-required="radio">
+          <legend>How much do you invest in marketing and content each month? <span class="req">*</span></legend>
+          <div class="opts">
+            <label class="opt"><input type="radio" name="Monthly marketing budget" value="Nothing yet"><span>Nothing yet</span></label>
+            <label class="opt"><input type="radio" name="Monthly marketing budget" value="Up to 500 TND"><span>Up to 500 TND</span></label>
+            <label class="opt"><input type="radio" name="Monthly marketing budget" value="500 to 1,500 TND"><span>500 to 1,500 TND</span></label>
+            <label class="opt"><input type="radio" name="Monthly marketing budget" value="1,500 to 3,000 TND"><span>1,500 to 3,000 TND</span></label>
+            <label class="opt"><input type="radio" name="Monthly marketing budget" value="3,000 TND and more"><span>3,000 TND and more</span></label>
+          </div>
+          <div class="err">Please choose one.</div>
+        </fieldset>
+
+        <fieldset class="q" data-required="radio">
+          <legend>Where is your business located? <span class="req">*</span></legend>
+          <div class="opts">
+            <label class="opt"><input type="radio" name="Location" value="Grand Tunis"><span>Grand Tunis</span></label>
+            <label class="opt"><input type="radio" name="Location" value="Elsewhere in Tunisia"><span>Elsewhere in Tunisia</span></label>
+            <label class="opt"><input type="radio" name="Location" value="Outside Tunisia"><span>Outside Tunisia</span></label>
+          </div>
+          <div class="err">Please choose one.</div>
+        </fieldset>
+      </section>
+
+      <!-- STEP 2 -->
+      <section class="step" data-step="1" hidden>
+        <div class="q" data-required="text">
+          <label class="label" for="fName">Your full name <span class="req">*</span></label>
+          <input id="fName" type="text" name="Name" autocomplete="name">
+          <div class="err">Please enter your name.</div>
+        </div>
+        <div class="q" data-required="text">
+          <label class="label" for="fBrand">Business or brand name <span class="req">*</span></label>
+          <input id="fBrand" type="text" name="Business" autocomplete="organization">
+          <div class="err">Please enter your business name.</div>
+        </div>
+        <fieldset class="q" data-required="radio">
+          <legend>Your role <span class="req">*</span></legend>
+          <div class="opts">
+            <label class="opt"><input type="radio" name="Role" value="Owner / Founder"><span>Owner / Founder</span></label>
+            <label class="opt"><input type="radio" name="Role" value="Manager"><span>Manager</span></label>
+            <label class="opt"><input type="radio" name="Role" value="Marketing / Communication"><span>Marketing / Communication</span></label>
+            <label class="opt"><input type="radio" name="Role" value="Other"><span>Other</span></label>
+          </div>
+          <div class="err">Please choose one.</div>
+        </fieldset>
+        <div class="q" data-required="phone">
+          <label class="label" for="fPhone">Phone number <span class="req">*</span></label>
+          <span class="hint">WhatsApp if possible</span>
+          <input id="fPhone" type="tel" name="Phone" autocomplete="tel" inputmode="tel" placeholder="+216 ">
+          <div class="err">Please enter a valid phone number.</div>
+        </div>
+        <div class="q" data-required="email-optional">
+          <label class="label" for="fEmail">Email</label>
+          <input id="fEmail" type="email" name="Email" autocomplete="email" placeholder="you@example.com">
+          <div class="err">This email doesn't look right.</div>
+        </div>
+      </section>
+
+      <!-- STEP 3 -->
+      <section class="step" data-step="2" hidden>
+        <div class="q">
+          <label class="label" for="fSocial">Instagram, Facebook or TikTok page</label>
+          <span class="hint">Paste a link or your @handle</span>
+          <input id="fSocial" type="text" name="Social page" placeholder="@yourbrand">
+        </div>
+        <fieldset class="q" data-required="radio">
+          <legend>How do you create content today? <span class="req">*</span></legend>
+          <div class="opts">
+            <label class="opt"><input type="radio" name="Current content" value="Don't post much yet"><span>We don't post much yet</span></label>
+            <label class="opt"><input type="radio" name="Current content" value="Ourselves with a phone"><span>Ourselves, with a phone</span></label>
+            <label class="opt"><input type="radio" name="Current content" value="With a freelancer"><span>With a freelancer</span></label>
+            <label class="opt"><input type="radio" name="Current content" value="With another agency"><span>With another agency</span></label>
+          </div>
+          <div class="err">Please choose one.</div>
+        </fieldset>
+        <fieldset class="q" data-required="radio">
+          <legend>What kind of collaboration are you looking for? <span class="req">*</span></legend>
+          <div class="opts">
+            <label class="opt"><input type="radio" name="Collaboration" value="One-time project"><span>A one-time project</span></label>
+            <label class="opt"><input type="radio" name="Collaboration" value="Monthly content"><span>Monthly content</span></label>
+            <label class="opt"><input type="radio" name="Collaboration" value="Not sure, wants advice"><span>Not sure yet, I'd like advice</span></label>
+          </div>
+          <div class="err">Please choose one.</div>
+        </fieldset>
+        <fieldset class="q" data-required="radio">
+          <legend>When would you like to start? <span class="req">*</span></legend>
+          <div class="opts">
+            <label class="opt"><input type="radio" name="Start" value="As soon as possible"><span>As soon as possible</span></label>
+            <label class="opt"><input type="radio" name="Start" value="Within a month"><span>Within a month</span></label>
+            <label class="opt"><input type="radio" name="Start" value="In 1 to 3 months"><span>In 1 to 3 months</span></label>
+            <label class="opt"><input type="radio" name="Start" value="Just exploring"><span>Just exploring</span></label>
+          </div>
+          <div class="err">Please choose one.</div>
+        </fieldset>
+        <div class="q">
+          <label class="label" for="fProject">Tell us about your project</label>
+          <span class="hint">What you have in mind, an example you like, a date to respect</span>
+          <textarea id="fProject" name="Project"></textarea>
+        </div>
+      </section>
+
+      <div class="nav">
+        <button type="button" class="back" id="back" hidden>Back</button>
+        <span></span>
+        <button type="submit" class="btn" id="next">Continue</button>
+      </div>
+      <div class="formerr" id="formerr" role="alert"></div>
+    </form>
+
+    <section class="thanks" id="thanks" tabindex="-1">
+      <div class="kicker">Request sent</div>
+      <h2>Thank you</h2>
+      <p>We got your request. The No9ta team will review it and contact you within 48 hours.</p>
+      <p class="ar" lang="ar" dir="rtl">شكرا على ثقتكم</p>
+    </section>
+  </main>
+
+  <footer><span>No9ta Creative Studio</span><span>Tunis</span></footer>
+</div>
+
+<script>
+// ---- SETUP: paste your free key from https://web3forms.com here ----
+const WEB3FORMS_KEY = "97683fe9-b4d1-4468-a71d-d3fcc1cdf571";
+// --------------------------------------------------------------------
+
+const form = document.getElementById('form');
+const steps = [...form.querySelectorAll('.step')];
+const stepLabels = [...document.querySelectorAll('#steps li')];
+const next = document.getElementById('next');
+const back = document.getElementById('back');
+const formerr = document.getElementById('formerr');
+let current = 0;
+
+function show(i) {
+  current = i;
+  steps.forEach((s, n) => s.hidden = n !== i);
+  stepLabels.forEach((l, n) => { l.className = n === i ? 'on' : n < i ? 'done' : ''; });
+  back.hidden = i === 0;
+  next.textContent = i === steps.length - 1 ? 'Send my request' : 'Continue';
+  document.getElementById('intro').hidden = i !== 0;
+  formerr.style.display = 'none';
+  document.getElementById('steps').scrollIntoView({ block: 'start' });
+}
+
+function valid(q) {
+  const kind = q.dataset.required;
+  if (!kind) return true;
+  if (kind === 'radio' || kind === 'check') return !!q.querySelector('input:checked');
+  const v = q.querySelector('input').value.trim();
+  if (kind === 'text') return v.length > 1;
+  if (kind === 'phone') return v.replace(/\D/g, '').length >= 8;
+  if (kind === 'email-optional') return v === '' || /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);
+  return true;
+}
+
+function validateStep() {
+  let first = null;
+  steps[current].querySelectorAll('.q').forEach(q => {
+    const ok = valid(q);
+    q.classList.toggle('bad', !ok);
+    if (!ok && !first) first = q;
+  });
+  if (first) {
+    first.scrollIntoView({ block: 'center' });
+    const f = first.querySelector('input,textarea');
+    if (f) f.focus({ preventScroll: true });
+  }
+  return !first;
+}
+
+form.addEventListener('change', e => {
+  const q = e.target.closest('.q');
+  if (q && q.classList.contains('bad') && valid(q)) q.classList.remove('bad');
+  if (e.target.name === 'Category') {
+    const other = document.getElementById('catOther');
+    other.hidden = e.target.value !== 'Other';
+    if (!other.hidden) other.focus();
+  }
+});
+form.addEventListener('input', e => {
+  const q = e.target.closest('.q');
+  if (q && q.classList.contains('bad') && valid(q)) q.classList.remove('bad');
+});
+
+back.addEventListener('click', () => show(current - 1));
+
+form.addEventListener('submit', async e => {
+  e.preventDefault();
+  if (!validateStep()) return;
+  if (current < steps.length - 1) return show(current + 1);
+
+  const fd = new FormData(form);
+  if (fd.get('botcheck')) return;
+  const data = { access_key: WEB3FORMS_KEY, from_name: 'No9ta website form' };
+  data.Services = fd.getAll('Services').join(', ');
+  for (const [k, v] of fd.entries()) {
+    if (k === 'Services' || k === 'botcheck' || !String(v).trim()) continue;
+    data[k] = v;
+  }
+  data.subject = 'New request: ' + (data.Business || data.Name || 'No9ta form');
+
+  if (WEB3FORMS_KEY.startsWith('YOUR_')) {
+    formerr.textContent = 'This form is not connected yet: the Web3Forms access key is missing.';
+    formerr.style.display = 'block';
+    return;
+  }
+  next.disabled = true; next.textContent = 'Sending';
+  try {
+    const res = await fetch('https://api.web3forms.com/submit', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+      body: JSON.stringify(data)
+    });
+    const out = await res.json();
+    if (!out.success) throw new Error(out.message || 'Submission failed');
+    form.hidden = true;
+    document.getElementById('steps').hidden = true;
+    const t = document.getElementById('thanks');
+    t.style.display = 'block'; t.focus(); t.scrollIntoView({ block: 'start' });
+  } catch (err) {
+    formerr.textContent = 'We could not send your request. Check your connection and try again.';
+    formerr.style.display = 'block';
+    next.disabled = false; next.textContent = 'Send my request';
+  }
+});
+</script>
+</body>
+</html>

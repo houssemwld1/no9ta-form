@@ -90,7 +90,13 @@ input::placeholder,textarea::placeholder{color:#7d7d7d}
 input:focus,textarea:focus{outline:none; border-color:var(--red-hi); box-shadow:0 0 0 2px rgba(230,57,70,.35)}
 .other{margin-top:12px}
 .err{display:none; color:var(--err); font-size:14px; font-weight:600; margin-top:12px}
-.q.bad .err{display:block}
+.q.bad > .err,.f.bad .err{display:block}
+.f{margin-top:18px}
+legend + .f,.hint + .f{margin-top:0}
+.f input{min-height:50px}
+.f.bad input{border-color:var(--err)}
+.flabel{display:block; font-weight:600; font-size:15px; margin-bottom:8px}
+.fhint{color:var(--muted); font-weight:500; font-size:13px; margin-inline-start:6px}
 
 .nav{display:flex; justify-content:space-between; align-items:center; gap:12px; margin-top:34px; padding-top:26px; border-top:1px solid var(--line)}
 button{font:inherit; cursor:pointer}
@@ -175,7 +181,7 @@ html[dir=rtl] input[dir=ltr]{text-align:right}
       <div class="kicker">Start a project</div>
       <h1 id="h1">Let's see if<br>we're a fit</h1>
       <p class="lead">No9ta Creative Studio works with brands that want content people stop to watch: video production, editing, scriptwriting and marketing strategy. Tell us about your business and we'll get back to you.</p>
-      <p class="meta">16 short questions · about 2 minutes</p>
+      <p class="meta">13 short steps · about 2 minutes</p>
       <p class="resume" id="resume" hidden>Welcome back. Your earlier answers are saved on this device.</p>
       <div class="start-row">
         <button type="button" class="btn" id="start">Start</button>
@@ -232,30 +238,6 @@ html[dir=rtl] input[dir=ltr]{text-align:right}
         </fieldset>
 
         <fieldset class="q" data-required="radio">
-          <legend>What is your approximate monthly revenue? <span class="req">*</span></legend>
-          <div class="opts">
-            <label class="opt"><input type="radio" name="Monthly revenue" value="0 to 5,000 TND"><span>0 to 5,000 TND</span></label>
-            <label class="opt"><input type="radio" name="Monthly revenue" value="5,000 to 10,000 TND"><span>5,000 to 10,000 TND</span></label>
-            <label class="opt"><input type="radio" name="Monthly revenue" value="10,000 to 25,000 TND"><span>10,000 to 25,000 TND</span></label>
-            <label class="opt"><input type="radio" name="Monthly revenue" value="25,000 to 50,000 TND"><span>25,000 to 50,000 TND</span></label>
-            <label class="opt"><input type="radio" name="Monthly revenue" value="50,000 TND and more"><span>50,000 TND and more</span></label>
-          </div>
-          <div class="err">Please choose one.</div>
-        </fieldset>
-
-        <fieldset class="q" data-required="radio">
-          <legend>How much do you invest in marketing and content each month? <span class="req">*</span></legend>
-          <div class="opts">
-            <label class="opt"><input type="radio" name="Monthly marketing budget" value="Nothing yet"><span>Nothing yet</span></label>
-            <label class="opt"><input type="radio" name="Monthly marketing budget" value="Up to 500 TND"><span>Up to 500 TND</span></label>
-            <label class="opt"><input type="radio" name="Monthly marketing budget" value="500 to 1,500 TND"><span>500 to 1,500 TND</span></label>
-            <label class="opt"><input type="radio" name="Monthly marketing budget" value="1,500 to 3,000 TND"><span>1,500 to 3,000 TND</span></label>
-            <label class="opt"><input type="radio" name="Monthly marketing budget" value="3,000 TND and more"><span>3,000 TND and more</span></label>
-          </div>
-          <div class="err">Please choose one.</div>
-        </fieldset>
-
-        <fieldset class="q" data-required="radio">
           <legend>Where is your business located? <span class="req">*</span></legend>
           <div class="opts">
             <label class="opt"><input type="radio" name="Location" value="Grand Tunis"><span>Grand Tunis</span></label>
@@ -266,45 +248,59 @@ html[dir=rtl] input[dir=ltr]{text-align:right}
         </fieldset>
 
         <!-- PART 2 -->
-        <div class="q" data-required="text" data-part="About you">
-          <label class="label" for="fName">Your full name <span class="req">*</span></label>
-          <input id="fName" type="text" name="Name" autocomplete="name">
-          <div class="err">Please enter your name.</div>
-        </div>
-        <div class="q" data-required="text">
-          <label class="label" for="fBrand">Business or brand name <span class="req">*</span></label>
-          <input id="fBrand" type="text" name="Business" autocomplete="organization">
-          <div class="err">Please enter your business name.</div>
-        </div>
+        <fieldset class="q" data-part="About you">
+          <legend>Your contact details</legend>
+          <div class="f" data-required="text">
+            <label class="flabel" for="fName">Your full name <span class="req">*</span></label>
+            <input id="fName" type="text" name="Name" autocomplete="name" enterkeyhint="next">
+            <div class="err">Please enter your name.</div>
+          </div>
+          <div class="f" data-required="text">
+            <label class="flabel" for="fBrand">Business or brand name <span class="req">*</span></label>
+            <input id="fBrand" type="text" name="Business" autocomplete="organization" enterkeyhint="next">
+            <div class="err">Please enter your business name.</div>
+          </div>
+          <div class="f" data-required="phone">
+            <label class="flabel" for="fPhone">Phone number <span class="req">*</span> <span class="fhint">WhatsApp if possible</span></label>
+            <input id="fPhone" dir="ltr" type="tel" name="Phone" autocomplete="tel" inputmode="tel" placeholder="+216 " enterkeyhint="next">
+            <div class="err">Please enter a valid phone number.</div>
+          </div>
+          <div class="f" data-required="email-optional">
+            <label class="flabel" for="fEmail">Email <span class="fhint">Optional</span></label>
+            <input id="fEmail" dir="ltr" type="email" name="Email" autocomplete="email" placeholder="you@example.com">
+            <div class="err">This email doesn't look right.</div>
+          </div>
+        </fieldset>
         <fieldset class="q" data-required="radio">
-          <legend>Your role <span class="req">*</span></legend>
+          <legend>How did you hear about us? <span class="req">*</span></legend>
           <div class="opts">
-            <label class="opt"><input type="radio" name="Role" value="Owner / Founder"><span>Owner / Founder</span></label>
-            <label class="opt"><input type="radio" name="Role" value="Manager"><span>Manager</span></label>
-            <label class="opt"><input type="radio" name="Role" value="Marketing / Communication"><span>Marketing / Communication</span></label>
-            <label class="opt"><input type="radio" name="Role" value="Other"><span>Other</span></label>
+            <label class="opt"><input type="radio" name="Heard via" value="Instagram"><span>Instagram</span></label>
+            <label class="opt"><input type="radio" name="Heard via" value="Facebook"><span>Facebook</span></label>
+            <label class="opt"><input type="radio" name="Heard via" value="TikTok"><span>TikTok</span></label>
+            <label class="opt"><input type="radio" name="Heard via" value="A friend or client"><span>A friend or client</span></label>
+            <label class="opt"><input type="radio" name="Heard via" value="Google"><span>Google</span></label>
+            <label class="opt"><input type="radio" name="Heard via" value="Other"><span>Other</span></label>
           </div>
           <div class="err">Please choose one.</div>
         </fieldset>
-        <div class="q" data-required="phone">
-          <label class="label" for="fPhone">Phone number <span class="req">*</span></label>
-          <span class="hint">WhatsApp if possible</span>
-          <input id="fPhone" dir="ltr" type="tel" name="Phone" autocomplete="tel" inputmode="tel" placeholder="+216 ">
-          <div class="err">Please enter a valid phone number.</div>
-        </div>
-        <div class="q" data-required="email-optional">
-          <label class="label" for="fEmail">Email</label>
-          <span class="hint">Optional</span>
-          <input id="fEmail" dir="ltr" type="email" name="Email" autocomplete="email" placeholder="you@example.com">
-          <div class="err">This email doesn't look right.</div>
-        </div>
 
         <!-- PART 3 -->
-        <div class="q" data-part="Your content">
-          <label class="label" for="fSocial">Instagram, Facebook or TikTok page</label>
-          <span class="hint">Optional. Paste a link or your @handle</span>
-          <input id="fSocial" dir="ltr" type="text" name="Social page" placeholder="@yourbrand">
-        </div>
+        <fieldset class="q" data-part="Your content">
+          <legend>Your social media pages</legend>
+          <span class="hint">Optional. Fill in the ones you have: a link or your @handle</span>
+          <div class="f">
+            <label class="flabel" for="fInsta">Instagram</label>
+            <input id="fInsta" dir="ltr" type="text" name="Instagram" placeholder="@yourbrand" autocapitalize="none" autocomplete="off" enterkeyhint="next">
+          </div>
+          <div class="f">
+            <label class="flabel" for="fFb">Facebook</label>
+            <input id="fFb" dir="ltr" type="text" name="Facebook" placeholder="@yourbrand" autocapitalize="none" autocomplete="off" enterkeyhint="next">
+          </div>
+          <div class="f">
+            <label class="flabel" for="fTik">TikTok</label>
+            <input id="fTik" dir="ltr" type="text" name="TikTok" placeholder="@yourbrand" autocapitalize="none" autocomplete="off">
+          </div>
+        </fieldset>
         <fieldset class="q" data-required="radio">
           <legend>How do you create content today? <span class="req">*</span></legend>
           <div class="opts">
@@ -334,6 +330,30 @@ html[dir=rtl] input[dir=ltr]{text-align:right}
           </div>
           <div class="err">Please choose one.</div>
         </fieldset>
+        <fieldset class="q" data-required="radio">
+          <legend>What is your approximate monthly revenue? <span class="req">*</span></legend>
+          <div class="opts">
+            <label class="opt"><input type="radio" name="Monthly revenue" value="Less than 5,000 TND"><span>Less than 5,000 TND</span></label>
+            <label class="opt"><input type="radio" name="Monthly revenue" value="5,000 to 10,000 TND"><span>5,000 to 10,000 TND</span></label>
+            <label class="opt"><input type="radio" name="Monthly revenue" value="10,000 to 25,000 TND"><span>10,000 to 25,000 TND</span></label>
+            <label class="opt"><input type="radio" name="Monthly revenue" value="More than 25,000 TND"><span>More than 25,000 TND</span></label>
+            <label class="opt"><input type="radio" name="Monthly revenue" value="Prefers not to say"><span>I prefer not to say</span></label>
+          </div>
+          <div class="err">Please choose one.</div>
+        </fieldset>
+
+        <fieldset class="q" data-required="radio">
+          <legend>How much do you invest in marketing and content each month? <span class="req">*</span></legend>
+          <div class="opts">
+            <label class="opt"><input type="radio" name="Monthly marketing budget" value="Nothing yet"><span>Nothing yet</span></label>
+            <label class="opt"><input type="radio" name="Monthly marketing budget" value="Up to 500 TND"><span>Up to 500 TND</span></label>
+            <label class="opt"><input type="radio" name="Monthly marketing budget" value="500 to 1,500 TND"><span>500 to 1,500 TND</span></label>
+            <label class="opt"><input type="radio" name="Monthly marketing budget" value="1,500 to 3,000 TND"><span>1,500 to 3,000 TND</span></label>
+            <label class="opt"><input type="radio" name="Monthly marketing budget" value="3,000 TND and more"><span>3,000 TND and more</span></label>
+          </div>
+          <div class="err">Please choose one.</div>
+        </fieldset>
+
         <div class="q">
           <label class="label" for="fProject">Tell us about your project</label>
           <span class="hint">Optional. What you have in mind, an example you like, a date to respect</span>
@@ -380,7 +400,8 @@ const WHATSAPP_NUMBER = "";  // digits with country code, e.g. "21612345678"
 const INSTAGRAM_URL = "";    // e.g. "https://instagram.com/yourpage"
 // --------------------------------------------------------------------
 
-const STORE = 'no9ta-form-v1';
+const STORE = 'no9ta-form-v2';
+try { localStorage.removeItem('no9ta-form-v1'); } catch (e) {}
 const $ = id => document.getElementById(id);
 const form = $('form'), intro = $('intro'), review = $('review'), progress = $('progress');
 const next = $('next'), back = $('back'), formerr = $('formerr');
@@ -399,7 +420,7 @@ const I18N = {
     "Start a project": "Démarrer un projet",
     "Let's see if|we're a fit": "Faisons|connaissance",
     "No9ta Creative Studio works with brands that want content people stop to watch: video production, editing, scriptwriting and marketing strategy. Tell us about your business and we'll get back to you.": "No9ta Creative Studio travaille avec les marques qui veulent du contenu qu'on s'arrête pour regarder : production vidéo, montage, écriture de scripts et stratégie marketing. Parlez-nous de votre activité et nous vous recontacterons.",
-    "16 short questions · about 2 minutes": "16 questions courtes · environ 2 minutes",
+    "13 short steps · about 2 minutes": "13 étapes courtes · environ 2 minutes",
     "Welcome back. Your earlier answers are saved on this device.": "Bon retour. Vos réponses précédentes sont enregistrées sur cet appareil.",
     "Start": "Commencer",
     "Continue where I left off": "Reprendre où j'en étais",
@@ -415,7 +436,7 @@ const I18N = {
     "Your content": "Votre contenu",
     "Review": "Vérification",
     "Almost done": "Presque terminé",
-    "Question {n} of {N}": "Question {n} sur {N}",
+    "Step {n} of {N}": "Étape {n} sur {N}",
     "Check your answers": "Vérifiez vos réponses",
     "Tap any answer to change it, then send your request.": "Touchez une réponse pour la modifier, puis envoyez votre demande.",
     "Edit": "Modifier",
@@ -457,11 +478,11 @@ const I18N = {
     "All of the above": "Tout cela à la fois",
     "Please choose one.": "Veuillez choisir une réponse.",
     "What is your approximate monthly revenue?": "Quel est votre chiffre d'affaires mensuel approximatif ?",
-    "0 to 5,000 TND": "0 à 5 000 TND",
+    "Less than 5,000 TND": "Moins de 5 000 TND",
     "5,000 to 10,000 TND": "5 000 à 10 000 TND",
     "10,000 to 25,000 TND": "10 000 à 25 000 TND",
-    "25,000 to 50,000 TND": "25 000 à 50 000 TND",
-    "50,000 TND and more": "50 000 TND et plus",
+    "More than 25,000 TND": "Plus de 25 000 TND",
+    "I prefer not to say": "Je préfère ne pas répondre",
     "How much do you invest in marketing and content each month?": "Combien investissez-vous chaque mois en marketing et en contenu ?",
     "Nothing yet": "Rien pour l'instant",
     "Up to 500 TND": "Jusqu'à 500 TND",
@@ -476,18 +497,17 @@ const I18N = {
     "Please enter your name.": "Veuillez saisir votre nom.",
     "Business or brand name": "Nom de l'entreprise ou de la marque",
     "Please enter your business name.": "Veuillez saisir le nom de votre entreprise.",
-    "Your role": "Votre rôle",
-    "Owner / Founder": "Propriétaire / Fondateur",
-    "Manager": "Gérant",
-    "Marketing / Communication": "Marketing / Communication",
+    "How did you hear about us?": "Comment nous avez-vous connus ?",
+    "A friend or client": "Un ami ou un client",
     "Phone number": "Numéro de téléphone",
     "WhatsApp if possible": "WhatsApp si possible",
     "Please enter a valid phone number.": "Veuillez saisir un numéro de téléphone valide.",
     "Email": "E-mail",
     "Optional": "Facultatif",
     "This email doesn't look right.": "Cet e-mail semble incorrect.",
-    "Instagram, Facebook or TikTok page": "Page Instagram, Facebook ou TikTok",
-    "Optional. Paste a link or your @handle": "Facultatif. Collez un lien ou votre @identifiant",
+    "Your contact details": "Vos coordonnées",
+    "Your social media pages": "Vos pages sur les réseaux sociaux",
+    "Optional. Fill in the ones you have: a link or your @handle": "Facultatif. Remplissez celles que vous avez : un lien ou votre @identifiant",
     "@yourbrand": "@votremarque",
     "How do you create content today?": "Comment créez-vous votre contenu aujourd'hui ?",
     "We don't post much yet": "Nous publions encore peu",
@@ -511,7 +531,7 @@ const I18N = {
     "Start a project": "ابدا مشروعك",
     "Let's see if|we're a fit": "خلّينا|نتعارفو",
     "No9ta Creative Studio works with brands that want content people stop to watch: video production, editing, scriptwriting and marketing strategy. Tell us about your business and we'll get back to you.": "No9ta Creative Studio تخدم مع الماركات اللي تحب محتوى يشدّ العين: تصوير فيديو، مونتاج، كتيبة سكريبت واستراتيجية ماركتينغ. احكيلنا على خدمتك وتوّا نرجعولك.",
-    "16 short questions · about 2 minutes": "16 سؤال قصير · تقريب دقيقتين",
+    "13 short steps · about 2 minutes": "13 خطوة قصيرة · تقريب دقيقتين",
     "Welcome back. Your earlier answers are saved on this device.": "مرحبا بيك من جديد. إجاباتك القديمة مسجّلة في الجهاز هذا.",
     "Start": "ابدا",
     "Continue where I left off": "نكمّل منين وقفت",
@@ -527,7 +547,7 @@ const I18N = {
     "Your content": "المحتوى متاعك",
     "Review": "مراجعة",
     "Almost done": "قريب نكمّلو",
-    "Question {n} of {N}": "السؤال {n} من {N}",
+    "Step {n} of {N}": "الخطوة {n} من {N}",
     "Check your answers": "ثبّت في إجاباتك",
     "Tap any answer to change it, then send your request.": "انزل على أي إجابة باش تبدّلها، ومبعد ابعث الطلب.",
     "Edit": "بدّل",
@@ -569,11 +589,11 @@ const I18N = {
     "All of the above": "الكلّ مع بعضهم",
     "Please choose one.": "اختار إجابة يعيّشك.",
     "What is your approximate monthly revenue?": "قدّاش تقريب المدخول متاعك في الشهر؟",
-    "0 to 5,000 TND": "من 0 لـ 5,000 دينار",
+    "Less than 5,000 TND": "أقل من 5,000 دينار",
     "5,000 to 10,000 TND": "من 5,000 لـ 10,000 دينار",
     "10,000 to 25,000 TND": "من 10,000 لـ 25,000 دينار",
-    "25,000 to 50,000 TND": "من 25,000 لـ 50,000 دينار",
-    "50,000 TND and more": "50,000 دينار وأكثر",
+    "More than 25,000 TND": "أكثر من 25,000 دينار",
+    "I prefer not to say": "نفضّل ما نقولش",
     "How much do you invest in marketing and content each month?": "قدّاش تصرف في الشهر على الماركتينغ والمحتوى؟",
     "Nothing yet": "حتى شي لتوّا",
     "Up to 500 TND": "حتى لـ 500 دينار",
@@ -588,18 +608,17 @@ const I18N = {
     "Please enter your name.": "اكتب اسمك يعيّشك.",
     "Business or brand name": "اسم الشركة ولا الماركة",
     "Please enter your business name.": "اكتب اسم الشركة يعيّشك.",
-    "Your role": "شنوّة دورك؟",
-    "Owner / Founder": "مولى المشروع / المؤسس",
-    "Manager": "مدير",
-    "Marketing / Communication": "ماركتينغ / اتصال",
+    "How did you hear about us?": "كيفاش عرفتنا؟",
+    "A friend or client": "صاحب ولا حريف",
     "Phone number": "نومرو التليفون",
     "WhatsApp if possible": "واتساب كان ممكن",
     "Please enter a valid phone number.": "اكتب نومرو صحيح يعيّشك.",
     "Email": "الإيميل",
     "Optional": "اختياري",
     "This email doesn't look right.": "الإيميل هذا يظهر موش صحيح.",
-    "Instagram, Facebook or TikTok page": "صفحة إنستغرام، فيسبوك ولا تيك توك",
-    "Optional. Paste a link or your @handle": "اختياري. حطّ الرابط ولا اسم الحساب",
+    "Your contact details": "معلوماتك",
+    "Your social media pages": "صفحاتك على السوشيال ميديا",
+    "Optional. Fill in the ones you have: a link or your @handle": "اختياري. عمّر اللي عندك: رابط ولا اسم الحساب",
     "How do you create content today?": "كيفاش تعمل المحتوى متاعك توّا؟",
     "We don't post much yet": "مازلنا ما ننشروش برشا",
     "Ourselves, with a phone": "وحدنا، بالتليفون",
@@ -628,8 +647,8 @@ function bind(sel, mode) {
     bound.push({ el, mode, src });
   });
 }
-bind('#intro .kicker, .lead, .meta, #resume, #restart, #back, #keys, .hint, .err, .review h2, .review > p, .thanks .kicker, #waLink, #igLink, footer span:last-child', 'text');
-bind('legend, .label, .opt span', 'first');
+bind('#intro .kicker, .lead, .meta, #resume, #restart, #back, #keys, .hint, .fhint, .err, .review h2, .review > p, .thanks .kicker, #waLink, #igLink, footer span:last-child', 'text');
+bind('legend, .label, .flabel, .opt span', 'first');
 bind('input[placeholder]', 'ph');
 
 function setLang(l) {
@@ -660,7 +679,7 @@ function paint() {
   const isQ = pos < N;
   next.textContent = tr(pos === N ? 'Send my request' : toReview ? 'Save answer' : 'Continue');
   $('ptitle').textContent = tr(isQ ? qs[pos].dataset.part : 'Review');
-  $('pcount').textContent = isQ ? tr('Question {n} of {N}').replace('{n}', pos + 1).replace('{N}', N) : tr('Almost done');
+  $('pcount').textContent = isQ ? tr('Step {n} of {N}').replace('{n}', pos + 1).replace('{N}', N) : tr('Almost done');
 }
 
 // Prepare questions: part names, focus targets, letter hints
@@ -677,15 +696,28 @@ qs.forEach(q => {
   });
 });
 
-function valid(q) {
-  const kind = q.dataset.required;
+// A screen is either one question, or several fields (.f) checked one by one
+function units(q) { const f = q.querySelectorAll('.f'); return f.length ? [...f] : [q]; }
+function validUnit(u) {
+  const kind = u.dataset.required;
   if (!kind) return true;
-  if (kind === 'radio' || kind === 'check') return !!q.querySelector('input:checked');
-  const v = q.querySelector('input').value.trim();
+  if (kind === 'radio' || kind === 'check') return !!u.querySelector('input:checked');
+  const v = u.querySelector('input').value.trim();
   if (kind === 'text') return v.length > 1;
   if (kind === 'phone') return v.replace(/\D/g, '').length >= 8;
   if (kind === 'email-optional') return v === '' || /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);
   return true;
+}
+function valid(q) { return units(q).every(validUnit); }
+// Show or clear the error on each part of a screen; returns the parts that are wrong
+function mark(q) {
+  const bad = units(q).filter(u => !validUnit(u));
+  units(q).forEach(u => u.classList.toggle('bad', bad.includes(u)));
+  return bad;
+}
+function clearBad(t) {
+  const u = t.closest('.f') || t.closest('.q');
+  if (u && u.classList.contains('bad') && validUnit(u)) u.classList.remove('bad');
 }
 
 function syncOther() {
@@ -725,7 +757,7 @@ function restore() {
 function forget() { try { localStorage.removeItem(STORE); } catch (e) {} }
 
 // ---- Screens ----
-function show(i, dir = 1) {
+function show(i, dir = 1, focusEl = null) {
   clearTimeout(timer);
   pos = i;
   const isQ = i >= 0 && i < N;
@@ -748,8 +780,8 @@ function show(i, dir = 1) {
   }
   if (window.scrollY > 0) window.scrollTo(0, 0);
   if (isQ) {
-    const field = qs[i].querySelector('.opt') ? null : qs[i].querySelector('input,textarea');
-    (field || qs[i]).focus({ preventScroll: true });
+    const field = focusEl || (qs[i].querySelector('.opt') ? null : qs[i].querySelector('input,textarea'));
+    (field || qs[i]).focus({ preventScroll: !focusEl });
   } else if (i === N) review.focus({ preventScroll: true });
   save();
 }
@@ -758,14 +790,13 @@ function advance() {
   if (sending || pos < 0) return;
   if (pos === N) return send();
   const q = qs[pos];
-  if (!valid(q)) {
-    q.classList.add('bad');
+  const bad = mark(q);
+  if (bad.length) {
     if (!reduce) { q.classList.remove('shake', 'in-l', 'in-r'); void q.offsetWidth; q.classList.add('shake'); }
-    const f = q.querySelector('.opt') ? null : q.querySelector('input,textarea');
-    if (f) f.focus({ preventScroll: true });
+    const f = bad[0].querySelector('.opt') ? null : bad[0].querySelector('input,textarea');
+    if (f) f.focus({ preventScroll: bad[0] === q });
     return;
   }
-  q.classList.remove('bad');
   if (toReview) { toReview = false; return show(N, 1); }
   show(pos + 1, 1);
 }
@@ -781,7 +812,7 @@ function autoAdvance() {
 }
 
 // ---- Review ----
-function titleOf(q) { return q.querySelector('legend,.label').firstChild.textContent.trim(); }
+function titleOf(u) { return u.querySelector('.flabel, legend, .label').firstChild.textContent.trim(); }
 function answerOf(q) {
   if (q.querySelector('.opt')) {
     let a = [...q.querySelectorAll('.opt input:checked')].map(i => i.nextElementSibling.firstChild.textContent.trim()).join(', ');
@@ -794,23 +825,22 @@ function answerOf(q) {
 function buildReview() {
   const list = $('rvlist');
   list.textContent = '';
-  qs.forEach((q, n) => {
+  qs.forEach((q, n) => units(q).forEach(u => {
     const b = document.createElement('button');
     b.type = 'button'; b.className = 'rv';
-    const a = answerOf(q);
-    const rq = document.createElement('span'); rq.className = 'rq'; rq.textContent = titleOf(q);
+    const a = answerOf(u);
+    const rq = document.createElement('span'); rq.className = 'rq'; rq.textContent = titleOf(u);
     const ra = document.createElement('span'); ra.className = 'ra' + (a ? '' : ' none'); ra.textContent = a || tr('Not answered');
     const re = document.createElement('span'); re.className = 're'; re.textContent = tr('Edit');
     b.append(rq, re, ra);
-    b.addEventListener('click', () => { toReview = true; show(n, -1); });
+    b.addEventListener('click', () => { toReview = true; show(n, -1, u === q ? null : u.querySelector('input')); });
     list.append(b);
-  });
+  }));
 }
 
 // ---- Events ----
 form.addEventListener('change', e => {
-  const q = e.target.closest('.q');
-  if (q && q.classList.contains('bad') && valid(q)) q.classList.remove('bad');
+  clearBad(e.target);
   if (e.target.name === 'Category') {
     syncOther();
     if (e.target.value === 'Other') $('catOther').focus();
@@ -818,8 +848,7 @@ form.addEventListener('change', e => {
   save();
 });
 form.addEventListener('input', e => {
-  const q = e.target.closest('.q');
-  if (q && q.classList.contains('bad') && valid(q)) q.classList.remove('bad');
+  clearBad(e.target);
   save();
 });
 // Tap or click on a single-choice answer moves on (keyboard arrows do not)
@@ -831,6 +860,12 @@ document.addEventListener('keydown', e => {
   if (e.ctrlKey || e.metaKey || e.altKey || sending) return;
   const t = e.target, tag = t.tagName;
   const typing = tag === 'TEXTAREA' || tag === 'SELECT' || (tag === 'INPUT' && !/radio|checkbox/.test(t.type));
+  // On a screen with several fields, Enter moves to the next field first
+  if (e.key === 'Enter' && tag === 'INPUT' && t.closest('.f') && !toReview) {
+    const fs = [...t.closest('.q').querySelectorAll('.f input')];
+    const nx = fs[fs.indexOf(t) + 1];
+    if (nx) { e.preventDefault(); nx.focus(); return; }
+  }
   if (typing) return;
   if (e.key === 'Enter' && tag !== 'BUTTON' && tag !== 'INPUT' && tag !== 'A') {
     if (pos === -1) { e.preventDefault(); start(); }
@@ -856,7 +891,7 @@ function start() { show(resumeAt, 1); }
 $('start').addEventListener('click', start);
 $('restart').addEventListener('click', () => {
   forget(); form.reset(); syncOther();
-  qs.forEach(q => q.classList.remove('bad'));
+  form.querySelectorAll('.bad').forEach(u => u.classList.remove('bad'));
   resumeAt = 0;
   $('resume').hidden = true; $('restart').hidden = true;
   resumed = false;
@@ -877,7 +912,7 @@ setLang(firstLang);
 // ---- Send ----
 async function send() {
   const firstBad = qs.findIndex(q => !valid(q));
-  if (firstBad !== -1) { toReview = true; show(firstBad, -1); qs[firstBad].classList.add('bad'); return; }
+  if (firstBad !== -1) { toReview = true; show(firstBad, -1); mark(qs[firstBad]); return; }
 
   const fd = new FormData(form);
   if (fd.get('botcheck')) return;
